@@ -1,10 +1,22 @@
 #include <iostream>
 
+#include "Card.h"
+#include "Deck.h"
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "ComputerPlayer.h"
+#include "Command.h"
+#include "Table.h"
+
 using namespace std;
+
+const int NUM_PLAYERS(4);
 
 int main()
 {
-    Player* players = new Player[4]; //should always be 4 players
+    Deck _deck;
+    Table _table;
+    Player* _players = new Player[NUM_PLAYERS]; //should be 4 players
 
     for(int i=0; i<4;i++)
     {
@@ -13,11 +25,17 @@ int main()
         char type;
         cin >> type;
         if(type == 'h')
-            players[i] = new HumanPlayer();
+            _players[i] = new HumanPlayer();
         else
-            players[i] = new ComputerPlayer();
+            _players[i] = new ComputerPlayer();
     }
 
-    cout << "Is player <x> a human(h) or computer(c)"
+
+
+    cout << "A new round begins. It's player 4's turn to play." << endl;
+
+    //Command _command = new Command();
+    //_command.type = Type.BAD_COMMAND
+
     return 0;
 }

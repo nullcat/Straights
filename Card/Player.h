@@ -3,17 +3,22 @@
 
 #include <ostream>
 #include <istream>
+#include <vector>
+
+#include "Card.h"
+
+using namespace std;
 
 class Player{
 public:
-	Card* getHand() const;
+	vector<Card> getHand() const;
 	void addToHand(Card card);
 	void addCards(Card* card);
-	Card* playCard(string cardID);
+	virtual Card playCard(Card card);
 private:
-    findCard(Card::Rank, Card::Suit);
-    removeCard(Card::Rank, Card::Suit);
-	Card* _hand;
+    void removeCard(Card Card);
+    vector<Card> findCard(Card card) const;
+	vector<Card> hand_;
 };
 
 #endif

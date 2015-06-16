@@ -1,0 +1,60 @@
+# depslib dependency file v1.0
+1434229984 source:c:\users\jaden\desktop\cs247\card\card.cpp
+	"Card.h"
+	<string>
+	<cassert>
+
+1434423675 c:\users\jaden\desktop\cs247\card\card.h
+	<ostream>
+	<istream>
+
+1434424112 source:c:\users\jaden\desktop\cs247\card\command.cpp
+	"Command.h"
+	<cassert>
+	<sstream>
+
+1434171473 c:\users\jaden\desktop\cs247\card\command.h
+	"Card.h"
+	<istream>
+
+1434428036 source:c:\users\jaden\desktop\cs247\card\computerplayer.cpp
+	<ostream>
+	<istream>
+	"ComputerPlayer.h"
+
+1434430435 source:c:\users\jaden\desktop\cs247\card\deck.cpp
+	<ostream>
+	<istream>
+	<random>
+	"Deck.h"
+
+1434430223 c:\users\jaden\desktop\cs247\card\deck.h
+	<ostream>
+	<istream>
+	<random>
+	<vector>
+	"Card.h"
+
+1434428046 source:c:\users\jaden\desktop\cs247\card\humanplayer.cpp
+	<ostream>
+	<istream>
+	"HumanPlayer.h"
+
+1434430168 c:\users\jaden\desktop\cs247\card\computerplayer.h
+	<ostream>
+	<istream>
+	"Player.h"
+
+1434430940 c:\users\jaden\desktop\cs247\card\player.h
+	<ostream>
+	<istream>
+	<vector>
+	"Card.h"
+
+1434424292 source:c:\users\jaden\desktop\cs247\card\game.cpp
+
+1434430600 c:\users\jaden\desktop\cs247\card\humanplayer.h
+	<ostream>
+	<istream>
+	"Player.h"
+

@@ -4,7 +4,12 @@
 #include <ostream>
 #include <istream>
 
-class ComputerPlayer : public Player{
+#include "Player.h"
+
+using namespace std;
+
+class ComputerPlayer : public Player
+{
 public:
 private:
 };

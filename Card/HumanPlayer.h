@@ -4,9 +4,13 @@
 #include <ostream>
 #include <istream>
 
+#include "Player.h"
+
+using namespace std;
+
 class HumanPlayer : public Player{
 public:
-	Card(Suit, Rank);
+	HumanPlayer();
 	Suit getSuit() const;
 	Rank getRank() const;
 private:
