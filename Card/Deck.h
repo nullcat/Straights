@@ -18,12 +18,12 @@ public:
     Deck();
     ~Deck();
 	void shuffle();
-	vector<Card*> dealCards();
+	vector<Card> dealCards();
 	void printDeck() const;
     static int seed;
 private:
     int deckDepth;  //tracks dealt cards, each time dealCards() is called, +13 to depth
-	vector<Card*> cards_;
+	vector<Card> cards_;
 };
 
 #endif

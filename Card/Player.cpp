@@ -6,11 +6,18 @@
 
 using namespace std;
 
+Player::Player()
+{
+    score_ = 0;
+}
+
+Player::~Player(){}
+
 void Player::printHand() const
 {
 	for(int i = 0; i < hand_.size(); i++)
     {
-        cout << *hand_[i] << endl;
+        cout << hand_[i] << endl;
     }
 }
 
@@ -18,7 +25,7 @@ void Player::printLegalPlays() const
 {
 	for(int i = 0; i < hand_.size(); i++)
     {
-        cout << *legalPlays_[i] << endl;
+        cout << legalPlays_[i] << endl;
     }
 }
 
@@ -27,24 +34,15 @@ int Player::getScore() const
     return score_;
 }
 
-Card* Player::findCard(Suit suit, Rank rank) const
+Card Player::findCard(Card card) const
 {
-    for(int i = 0; i < hand_.size(); i++)
-    {
-        if(hand_.at(i)->getSuit() == suit && hand_.at(i)->getRank() == rank)
-        {
-            return hand_.at(i);
-        }
-    }
-
-    return NULL;
 }
 
-bool Player::hasCard(Suit suit, Rank rank) const
+bool Player::hasCard(Card card) const
 {
     for(int i = 0; i < hand_.size(); i++)
     {
-        if(hand_.at(i)->getSuit() == suit && hand_.at(i)->getRank() == rank)
+        if(hand_[i] == hand_[i])
         {
             return true;
         }
@@ -53,7 +51,7 @@ bool Player::hasCard(Suit suit, Rank rank) const
     return false;
 }
 
-void Player::discardCard(Card* card)
+void Player::discardCard(Card card)
 {
     bool isLegal = false;
 
@@ -67,27 +65,53 @@ void Player::discardCard(Card* card)
     }
 
     if(isLegal)
-        throw string("You have a legal play. You may not discard.");
+        throw "You have a legal play. You may not discard.";
 
     discards_.push_back(card);
-    score_ += card->getRank();
+    score_ += card.getRank();
+    removeCard(card);
 }
 
-void Player::removeCard(Card* card)
+void Player::removeCard(Card card)
 {
-    for(int i = )
+    for(vector<Card>::iterator i = hand_.begin(); i != hand_.end(); i++)
+    {
+        if(*i == card)
+        {
+            hand_.erase(i);
+            return;
+        }
+    }
+
+    // else nothing happens
 }
 
-void Player::getNewLegalPlays(vector<Card*> tableCards)
+void Player::getNewLegalPlays(vector<Card> tableCards)
 {
     if(tableCards.empty())
     {
-        Card* sevenSpade = findCard(SPADE, SEVEN);
+        Card sevenSpade = Card(SPADE, SEVEN);
 
-        if(sevenSpade != NULL)
+        if(hasCard(sevenSpade))
         {
             legalPlays_.clear();
             legalPlays_.push_back(sevenSpade);
+        }
+    }
+    else
+    {
+        for(int i; i < hand_.size(); i++)
+        {
+            Card curCard = hand_[i];
+            Suit curSuit = curCard.getSuit();
+            Rank curRank = curCard.getRank();
+
+            if(curRank == SEVEN)
+                legalPlays_.push_back(curCard);
+            else
+            {
+
+            }
         }
     }
 }

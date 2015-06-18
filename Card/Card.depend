@@ -22,12 +22,12 @@
 	<istream>
 	"ComputerPlayer.h"
 
-1434582457 source:c:\users\jaden\desktop\cs247\card\deck.cpp
+1434599074 source:c:\users\jaden\desktop\cs247\card\deck.cpp
 	<iostream>
 	<random>
 	"Deck.h"
 
-1434582502 c:\users\jaden\desktop\cs247\card\deck.h
+1434598585 c:\users\jaden\desktop\cs247\card\deck.h
 	<ostream>
 	<istream>
 	<random>
@@ -44,7 +44,7 @@
 	<istream>
 	"Player.h"
 
-1434589003 c:\users\jaden\desktop\cs247\card\player.h
+1434599916 c:\users\jaden\desktop\cs247\card\player.h
 	<ostream>
 	<istream>
 	<vector>
