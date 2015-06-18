@@ -13,6 +13,7 @@ class ComputerPlayer : public Player
 public:
     ComputerPlayer();                             // default constructor
     ComputerPlayer(const Player& player);    // copy contructor
+    ~ComputerPlayer();
     void makeMove(Table &table);
 };
 

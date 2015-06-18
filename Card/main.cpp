@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 
     Deck* _deck = new Deck();
     Table* _table = new Table();
-    Player* _players = new Player[NUM_PLAYERS]; //should be 4 players
+    Player* _players[NUM_PLAYERS]; //should be 4 players
 
     for(int i=0; i<4;i++)
     {
@@ -26,10 +26,10 @@ int main(int argc, char* argv[])
 
         char type;
         cin >> type;
-        if(type == 'h');
-            //_players[i] = new HumanPlayer();
-        //else
-            //_players[i] = new ComputerPlayer();
+        if(type == 'h')
+            _players[i] = new HumanPlayer();
+        else
+            _players[i] = new ComputerPlayer();
     }
 
 

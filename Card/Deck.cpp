@@ -69,3 +69,5 @@ void Deck::printDeck() const
 
     cout << "\n>";
 }
+
+int Deck::seed = 0;

@@ -1,5 +1,5 @@
-#ifndef _COMPUTERPLAYER_
-#define _COMPUTERPLAYER_
+#ifndef _HUMANPLAYER_
+#define _HUMANPLAYER_
 
 #include <ostream>
 #include <istream>
@@ -11,8 +11,10 @@ using namespace std;
 class HumanPlayer : public Player
 {
 public:
-	explicit HumanPlayer();
-	Card playCard();
+	HumanPlayer();
+	~HumanPlayer();
+	void printHand() const;
+	void makeMove(Table &table);
 };
 
 #endif
