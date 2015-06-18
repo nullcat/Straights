@@ -12,10 +12,12 @@ using namespace std;
 
 const int NUM_PLAYERS(4);
 
-int main()
+int main(int argc, char* argv[])
 {
-    Deck _deck;
-    Table _table;
+    Deck::seed = argc;   // set seed for random generator for shuffling
+
+    Deck* _deck = new Deck();
+    Table* _table = new Table();
     Player* _players = new Player[NUM_PLAYERS]; //should be 4 players
 
     for(int i=0; i<4;i++)
@@ -24,10 +26,10 @@ int main()
 
         char type;
         cin >> type;
-        if(type == 'h')
-            _players[i] = new HumanPlayer();
-        else
-            _players[i] = new ComputerPlayer();
+        if(type == 'h');
+            //_players[i] = new HumanPlayer();
+        //else
+            //_players[i] = new ComputerPlayer();
     }
 
 

@@ -8,12 +8,11 @@
 
 using namespace std;
 
-class HumanPlayer : public Player{
+class HumanPlayer : public Player
+{
 public:
-	HumanPlayer();
-	Suit getSuit() const;
-	Rank getRank() const;
-private:
+	explicit HumanPlayer();
+	Card playCard();
 };
 
 #endif

@@ -10,16 +10,20 @@
 
 using namespace std;
 
-const int seed(0);
-const int CARD_COUNT(52);
-const int DEAL_AMOUNT(13);
+const int CARD_COUNT(52);   // mostly relayed to Deck class but may need to be used outside of deck class
+const int DEAL_AMOUNT(13);  // same idea as CARD_COUNT
 
 class Deck{
 public:
+    Deck();
+    ~Deck();
 	void shuffle();
-	vector<Card> dealCards();
+	vector<Card*> dealCards();
+	void printDeck() const;
+    static int seed;
 private:
-	vector<Card> cards_;
+    int deckDepth;  //tracks dealt cards, each time dealCards() is called, +13 to depth
+	vector<Card*> cards_;
 };
 
 #endif

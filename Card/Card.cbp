@@ -32,6 +32,22 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Card.cpp" />
+		<Unit filename="Card.h" />
+		<Unit filename="Command.cpp" />
+		<Unit filename="Command.h" />
+		<Unit filename="ComputerPlayer.cpp" />
+		<Unit filename="ComputerPlayer.h" />
+		<Unit filename="Deck.cpp" />
+		<Unit filename="Deck.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="HumanPlayer.cpp" />
+		<Unit filename="HumanPlayer.h" />
+		<Unit filename="Player.cpp" />
+		<Unit filename="Player.h" />
+		<Unit filename="Table.cpp" />
+		<Unit filename="Table.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

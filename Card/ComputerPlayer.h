@@ -11,7 +11,9 @@ using namespace std;
 class ComputerPlayer : public Player
 {
 public:
-private:
+    ComputerPlayer();                             // default constructor
+    ComputerPlayer(const Player& player);    // copy contructor
+    void makeMove(Table &table);
 };
 
 #endif
