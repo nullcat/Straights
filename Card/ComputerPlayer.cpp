@@ -1,25 +1,28 @@
 #include <ostream>
 #include <istream>
+#include <iostream>
 
 #include "ComputerPlayer.h"
 
-ComputerPlayer::ComputerPlayer() : Player()
-{
+ComputerPlayer::ComputerPlayer() : Player(){}
 
-}
+ComputerPlayer::~ComputerPlayer(){}
 
-ComputerPlayer::ComputerPlayer(const Player& humanPlayer)
-{
-    score_ = humanPlayer.getScore();
-    hand_ = humanPlayer.getHand();
-	discards_ = humanPlayer.getDiscards();
-}
+ComputerPlayer::ComputerPlayer(const Player& humanPlayer): Player(humanPlayer){}
 
-void ComputerPlayer::makeMove(Table& table)
+Type ComputerPlayer::makeMove(Table& table, Deck& deck)
 {
     getNewLegalPlays(table);
     if(legalPlays_.empty())
+    {
         discardCard(hand_[0]); //discard first card in hand
+        cout << "Player " << getPlayerNumber() << " discards " << hand_[0] << endl;
+        return DISCARD;
+    }
     else
-        playCard(legalPlays_.at(0), table);
+    {
+        playCard(legalPlays_[0], table);
+        cout << "Player " << getPlayerNumber() << " plays " << legalPlays_[0] << endl;
+        return PLAY;
+    }
 }

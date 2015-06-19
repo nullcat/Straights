@@ -17,10 +17,11 @@ class Deck{
 public:
     Deck();
     ~Deck();
+    void reset();
 	void shuffle();
 	vector<Card> dealCards();
-	void printDeck() const;
     static int seed;
+    friend ostream& operator << (ostream&, const Deck&);
 private:
     int deckDepth;  //tracks dealt cards, each time dealCards() is called, +13 to depth
 	vector<Card> cards_;

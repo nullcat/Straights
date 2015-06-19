@@ -7,9 +7,36 @@
 
 using namespace std;
 
-Player::Player(): score_(0){}
+// initializes static player count to zero
+int Player::NumberOfPlayers_ = 0;
+
+Player::Player(): score_(0), playerNumber_(++NumberOfPlayers_){}
+
+Player::Player(const Player& otherPlayer)
+{
+    score_ = otherPlayer.getScore();
+    playerNumber_ = otherPlayer.getPlayerNumber();
+    hand_ = otherPlayer.hand_;
+	discards_ = otherPlayer.discards_;
+}
 
 Player::~Player(){}
+
+void Player::addCards(vector<Card> cards)
+{
+    for(int i=0;i<cards.size();i++)
+    {
+        hand_.push_back(cards[i]);
+    }
+}
+
+void Player::newRound()
+{
+    hand_.clear();
+    discards_.clear();
+
+    oldScore_ = score_;
+}
 
 void Player::printHand() const
 {
@@ -22,29 +49,36 @@ void Player::printLegalPlays() const
 	printCards(legalPlays_);
 }
 
+void Player::printDiscardsAndScore() const
+{
+    cout << "Player " << getPlayerNumber() << "'s discards: ";
+    printCards(discards_);
+    cout << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore() << " = " << getOldScore()+getScore() << endl;
+}
+
 void Player::printCards(vector<Card> cards) const
 {
-    for(int i = 0; i < hand_.size(); i++)
+    for(int i = 0; i < cards.size(); i++)
     {
-        cout << legalPlays_[i] << " ";
+        cout << cards[i] << " ";
     }
 
     cout << endl;
 }
 
-vector<Card> Player::getHand() const
-{
-    return hand_;
-}
-
-vector<Card> Player::getDiscards() const
-{
-    return discards_;
-}
-
 int Player::getScore() const
 {
     return score_;
+}
+
+int Player::getOldScore() const
+{
+    return oldScore_;
+}
+
+int Player::getPlayerNumber() const
+{
+    return playerNumber_;
 }
 
 //Card Player::findCard(Card card) const
@@ -72,10 +106,11 @@ void Player::playCard(Card card, Table& table)
         {
             table.addCard(card);
             removeCard(card);
+            return;
         }
     }
 
-    throw "This is not a legal play.";
+    throw string("This is not a legal play.");
 }
 
 void Player::discardCard(Card card)
@@ -92,10 +127,10 @@ void Player::discardCard(Card card)
     }
 
     if(isLegal)
-        throw "You have a legal play. You may not discard.";
+        throw string("You have a legal play. You may not discard.");
 
     discards_.push_back(card);
-    score_ += card.getRank();
+    score_ += card.getRank();   // score only goes up on discarding a card
     removeCard(card);
 }
 
@@ -115,37 +150,40 @@ void Player::removeCard(Card card)
 
 void Player::getNewLegalPlays(const Table &table)
 {
+    legalPlays_.clear();
+
     if(table.isEmpty())
+    {
+        cout << "hi" << endl;
+    }
+
+    if(table.isEmpty() == true)
     {
         Card sevenSpade = Card(SPADE, SEVEN);
 
         if(hasCard(sevenSpade))
-        {
             legalPlays_.push_back(sevenSpade);
-        }
     }
-    else
+
+    for(int i; i < hand_.size(); i++)
     {
-        for(int i; i < hand_.size(); i++)
+        Card curCard = hand_[i];
+        Suit curSuit = curCard.getSuit();
+        Rank curRank = curCard.getRank();
+
+        if(curRank == SEVEN)
+            legalPlays_.push_back(curCard);
+        else
         {
-            Card curCard = hand_[i];
-            Suit curSuit = curCard.getSuit();
-            Rank curRank = curCard.getRank();
+            vector<Card> sameSuitCards = table.getCardsOfSuit(curSuit);
 
-            if(curRank == SEVEN)
-                legalPlays_.push_back(curCard);
-            else
+            for(int j=0;j<sameSuitCards.size();j++)
             {
-                vector<Card> sameSuitCards = table.getCardsOfSuit(curSuit);
-
-                for(int j=0;j<sameSuitCards.size();j++)
+                // note that it should be impossible to have same suit and rank (same card)
+                if(abs((int)curRank - (int)sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card
                 {
-                    // note that it should be impossible to have same suit and rank (same card)
-                    if(abs(curRank - sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card
-                    {
-                        legalPlays_.push_back(curCard);
-                        break;
-                    }
+                    legalPlays_.push_back(curCard);
+                    break;
                 }
             }
         }

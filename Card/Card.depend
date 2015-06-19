@@ -17,54 +17,65 @@
 	"Card.h"
 	<istream>
 
-1434640229 source:c:\users\jaden\desktop\cs247\card\computerplayer.cpp
+1434670777 source:c:\users\jaden\desktop\cs247\card\computerplayer.cpp
 	<ostream>
 	<istream>
+	<iostream>
 	"ComputerPlayer.h"
 
-1434637955 source:c:\users\jaden\desktop\cs247\card\deck.cpp
+1434681971 source:c:\users\jaden\desktop\cs247\card\deck.cpp
 	<iostream>
 	<random>
 	"Deck.h"
 
-1434598585 c:\users\jaden\desktop\cs247\card\deck.h
+1434680000 c:\users\jaden\desktop\cs247\card\deck.h
 	<ostream>
 	<istream>
 	<random>
 	<vector>
 	"Card.h"
 
-1434643561 source:c:\users\jaden\desktop\cs247\card\humanplayer.cpp
+1434682919 source:c:\users\jaden\desktop\cs247\card\humanplayer.cpp
 	<iostream>
 	"HumanPlayer.h"
+	"Command.h"
 
-1434639264 c:\users\jaden\desktop\cs247\card\computerplayer.h
+1434670734 c:\users\jaden\desktop\cs247\card\computerplayer.h
 	<ostream>
 	<istream>
 	"Player.h"
 
-1434643445 c:\users\jaden\desktop\cs247\card\player.h
+1434686030 c:\users\jaden\desktop\cs247\card\player.h
 	<ostream>
 	<istream>
 	<vector>
 	"Card.h"
 	"Table.h"
+	"Deck.h"
+	"Command.h"
 
-1434424292 source:c:\users\jaden\desktop\cs247\card\game.cpp
+1434685907 source:c:\users\jaden\desktop\cs247\card\game.cpp
+	<ostream>
+	<istream>
+	<iostream>
+	"Game.h"
+	"Command.h"
+	"ComputerPlayer.h"
 
-1434643478 c:\users\jaden\desktop\cs247\card\humanplayer.h
+1434670429 c:\users\jaden\desktop\cs247\card\humanplayer.h
 	<ostream>
 	<istream>
 	"Player.h"
 
-1434643724 c:\users\jaden\desktop\cs247\card\table.h
+1434683803 c:\users\jaden\desktop\cs247\card\table.h
 	<ostream>
 	<istream>
 	<vector>
 	"Card.h"
 
-1434639230 source:c:\users\jaden\desktop\cs247\card\main.cpp
+1434683057 source:c:\users\jaden\desktop\cs247\card\main.cpp
 	<iostream>
+	<cassert>
 	"Card.h"
 	"Deck.h"
 	"Player.h"
@@ -72,13 +83,24 @@
 	"ComputerPlayer.h"
 	"Command.h"
 	"Table.h"
+	"Game.h"
 
-1434424292 source:c:\users\jaden\desktop\cs247\card\table.cpp
+1434686513 source:c:\users\jaden\desktop\cs247\card\table.cpp
+	<iostream>
+	"Table.h"
+	"Deck.h"
 
-1434643702 source:c:\users\jaden\desktop\cs247\card\player.cpp
+1434686902 source:c:\users\jaden\desktop\cs247\card\player.cpp
 	"Player.h"
 	<iostream>
 	<cassert>
 	<sstream>
 	<cmath>
+
+1434685900 c:\users\jaden\desktop\cs247\card\game.h
+	<ostream>
+	<istream>
+	"Player.h"
+	"Table.h"
+	"Deck.h"
 

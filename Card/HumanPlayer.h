@@ -14,7 +14,7 @@ public:
 	HumanPlayer();
 	~HumanPlayer();
 	void printHand() const;
-	void makeMove(Table &table);
+	Type makeMove(Table& table, Deck& deck);
 };
 
 #endif

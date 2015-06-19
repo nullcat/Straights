@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include "Card.h"
 #include "Deck.h"
@@ -7,37 +8,44 @@
 #include "ComputerPlayer.h"
 #include "Command.h"
 #include "Table.h"
+#include "Game.h"
 
 using namespace std;
 
-const int NUM_PLAYERS(4);
+const int NUM_PLAYERS = 4;
 
-int main(int argc, char* argv[])
+int main(int argc)
 {
-    Deck::seed = argc;   // set seed for random generator for shuffling
+    Deck::seed = 0; //argc;   // set seed for random generator for shuffling
 
-    Deck* _deck = new Deck();
-    Table* _table = new Table();
-    Player* _players[NUM_PLAYERS]; //should be 4 players
+    Deck* deck = new Deck();
+    Table* table = new Table();
+    vector<Player*> players; //should be 4 players
 
     for(int i=0; i<4;i++)
     {
-        cout << "Is player <x> a human(h) or computer(c)" << endl;
+        cout << "Is player " << (i+1) << " a human(h) or computer(c)?" << endl;
 
         char type;
         cin >> type;
+        assert(type =='h' || type == 'c');
+
         if(type == 'h')
-            _players[i] = new HumanPlayer();
-        else
-            _players[i] = new ComputerPlayer();
+            players.push_back(new HumanPlayer());
+        else if(type == 'c')
+            players.push_back(new ComputerPlayer());
     }
 
+    Game* game = new Game(players, *table, *deck);
 
+    while(!game->hasEnded())
+    {
+        game->startNewRound();
+    }
 
-    cout << "A new round begins. It's player 4's turn to play." << endl;
-
-    //Command _command = new Command();
-    //_command.type = Type.BAD_COMMAND
+    delete deck;
+    delete table;
+    delete game;
 
     return 0;
 }

@@ -21,28 +21,36 @@ vector<Card> Table::getCardsOfSuit(Suit suit) const
     return suitCards;
 }
 
+void Table::clearTable()
+{
+    cards_.clear();
+}
+
 bool Table::isEmpty() const
 {
     return cards_.empty();
 }
 
-void Table::printTable() const
+string Table::getRanksString(vector<Card> cards) const
 {
-    cout << "Cards on the table:" << endl;
-    cout << "Clubs: ";
-    printRanks(getCardsOfSuit(CLUB));
-    cout << "Diamonds: ";
-    printRanks(getCardsOfSuit(DIAMOND));
-    cout << "Hearts: ";
-    printRanks(getCardsOfSuit(HEART));
-    cout << "Spades: ";
-    printRanks(getCardsOfSuit(SPADE));
-}
+    string ranks;
 
-void Table::printRanks(vector<Card> cards) const
-{
     for(int i=0;i<cards.size();i++)
     {
-        cout << cards[i].getRank() << " ";
+        ranks += (int)cards[i].getRank() + " ";
     }
+
+    return ranks;
+}
+
+ostream& operator << (ostream &os, const Table &t)
+{
+
+    os << "Cards on the table:" << endl;
+    os << "Clubs: " << t.getRanksString(t.getCardsOfSuit(CLUB)) << endl;
+    os << "Diamonds: " << t.getRanksString(t.getCardsOfSuit(DIAMOND)) << endl;
+    os << "Hears: " << t.getRanksString(t.getCardsOfSuit(HEART)) << endl;
+    os << "Spades: " << "7" << endl;
+
+    return os;
 }

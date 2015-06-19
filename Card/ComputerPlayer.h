@@ -14,7 +14,7 @@ public:
     ComputerPlayer();                             // default constructor
     ComputerPlayer(const Player& player);    // copy contructor
     ~ComputerPlayer();
-    void makeMove(Table &table);
+    Type makeMove(Table& table, Deck& deck);
 };
 
 #endif

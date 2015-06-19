@@ -24,6 +24,11 @@ Deck::~Deck()
 //    }
 }
 
+void Deck::reset()
+{
+    deckDepth = 0;
+}
+
 void Deck::shuffle()
 {
     static mt19937 rng(seed);
@@ -41,33 +46,30 @@ vector<Card> Deck::dealCards()
 {
     vector<Card> cardsToPlayer;
 
-    for(int i = deckDepth; i < DEAL_AMOUNT; i++)
+    for(int i = deckDepth; i < deckDepth + DEAL_AMOUNT; i++)
     {
         cardsToPlayer.push_back(cards_[i]);
     }
 
     deckDepth += DEAL_AMOUNT;
-//    vector<Card>::const_iterator first = cards_.begin();
-//    vector<Card>::const_iterator last = cards_.begin() + DEAL_AMOUNT;
-//
-//    vector<Card> cardsToPlayer(first, last);
+
     return cardsToPlayer;
 }
 
-void Deck::printDeck() const
+ostream& operator << (ostream& os, const Deck& d)
 {
-    for (int i = 0; i < cards_.size(); i++)
+    for (int i = 0; i < d.cards_.size(); i++)
     {
-        cout << cards_[i] << " ";
+        os << d.cards_[i] << " ";
 
         // 13 per line
         if (i == 12 || i == 25 || i == 38 || i == 51)
         {
-            cout << endl;
+            os << endl;
         }
     }
 
-    cout << "\n>";
+    os << "\n>";
 }
 
 int Deck::seed = 0;

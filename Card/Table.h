@@ -13,10 +13,12 @@ class Table{
 public:
     void printTable() const;
     void addCard(Card card);
+    void clearTable();
     bool isEmpty() const;
     vector<Card> getCardsOfSuit(Suit) const;   // used to check against cards from players
+    friend ostream& operator << (ostream&, const Table&);
 private:
-    void printRanks(vector<Card> cards) const;
+    string getRanksString(vector<Card> cards) const;
     vector<Card> cards_;
 };
 
