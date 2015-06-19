@@ -53,14 +53,17 @@ void Player::printDiscardsAndScore() const
 {
     cout << "Player " << getPlayerNumber() << "'s discards: ";
     printCards(discards_);
-    cout << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore() << " = " << getOldScore()+getScore() << endl;
+    cout << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
 }
 
 void Player::printCards(vector<Card> cards) const
 {
     for(int i = 0; i < cards.size(); i++)
     {
-        cout << cards[i] << " ";
+        cout << cards[i];
+
+        if(i != cards.size()-1)
+            cout << " ";
     }
 
     cout << endl;
@@ -130,7 +133,7 @@ void Player::discardCard(Card card)
         throw string("You have a legal play. You may not discard.");
 
     discards_.push_back(card);
-    score_ += card.getRank();   // score only goes up on discarding a card
+    score_ += card.getRank() + 1;   // score only goes up on discarding a card
     removeCard(card);
 }
 
@@ -152,11 +155,6 @@ void Player::getNewLegalPlays(const Table &table)
 {
     legalPlays_.clear();
 
-    if(table.isEmpty())
-    {
-        cout << "hi" << endl;
-    }
-
     if(table.isEmpty() == true)
     {
         Card sevenSpade = Card(SPADE, SEVEN);
@@ -164,29 +162,31 @@ void Player::getNewLegalPlays(const Table &table)
         if(hasCard(sevenSpade))
             legalPlays_.push_back(sevenSpade);
     }
-
-    for(int i; i < hand_.size(); i++)
+    else
     {
-        Card curCard = hand_[i];
-        Suit curSuit = curCard.getSuit();
-        Rank curRank = curCard.getRank();
-
-        if(curRank == SEVEN)
-            legalPlays_.push_back(curCard);
-        else
+        for(int i = 0; i < hand_.size(); i++)
         {
-            vector<Card> sameSuitCards = table.getCardsOfSuit(curSuit);
+            Card curCard = hand_[i];
+            Suit curSuit = curCard.getSuit();
+            Rank curRank = curCard.getRank();
 
-            for(int j=0;j<sameSuitCards.size();j++)
+            if(curRank == SEVEN)
+                legalPlays_.push_back(curCard);
+            else
             {
-                // note that it should be impossible to have same suit and rank (same card)
-                if(abs((int)curRank - (int)sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card
+                vector<Card> sameSuitCards = table.getCardsOfSuit(curSuit);
+
+                for(int j=0;j<sameSuitCards.size();j++)
                 {
-                    legalPlays_.push_back(curCard);
-                    break;
+                    // note that it should be impossible to have same suit and rank (same card)
+                    if(abs((int)curRank - (int)sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card
+                    {
+                        legalPlays_.push_back(curCard);
+                    }
                 }
             }
         }
+        //printLegalPlays();
     }
 }
 

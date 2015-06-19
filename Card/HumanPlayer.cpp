@@ -27,11 +27,11 @@ Type HumanPlayer::makeMove(Table& table, Deck& deck)
         {
             if (c.type == PLAY) {
                 playCard(c.card, table);
-                cout << "Player " << getPlayerNumber() << " discards " << c.card << endl;
+                cout << "Player " << getPlayerNumber() << " plays " << c.card << "." << endl;
                 return PLAY;
             } else if (c.type == DISCARD) {
                 discardCard(c.card);
-                cout << "Player " << getPlayerNumber() << " discards " << c.card << endl;
+                cout << "Player " << getPlayerNumber() << " discards " << c.card << "." << endl;
                 return DISCARD;
             } else if (c.type == DECK) {
                 cout << deck << endl;

@@ -15,14 +15,14 @@ Type ComputerPlayer::makeMove(Table& table, Deck& deck)
     getNewLegalPlays(table);
     if(legalPlays_.empty())
     {
-        discardCard(hand_[0]); //discard first card in hand
-        cout << "Player " << getPlayerNumber() << " discards " << hand_[0] << endl;
+        cout << "Player " << getPlayerNumber() << " discards " << hand_[0] << "." << endl;
+        discardCard(hand_[0]);      //discard first card in hand
         return DISCARD;
     }
     else
     {
-        playCard(legalPlays_[0], table);
-        cout << "Player " << getPlayerNumber() << " plays " << legalPlays_[0] << endl;
+        cout << "Player " << getPlayerNumber() << " plays " << legalPlays_[0] << "." << endl;
+        playCard(legalPlays_[0], table);    //play first legal card
         return PLAY;
     }
 }

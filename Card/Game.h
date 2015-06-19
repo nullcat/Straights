@@ -23,6 +23,7 @@ private:
     int getStarterPlayerNumber() const;
     void dealDeck();
     void checkWinCondition();
+    void printWinners() const;
     bool endFlag_;
     Player* convertToComputerPlayer(Player*);
     Table table_;

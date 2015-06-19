@@ -3,6 +3,8 @@
 
 #include "Deck.h"
 
+int Deck::seed = 0;
+
 Deck::Deck()
 {
     for(int i = CLUB; i < SUIT_COUNT; i++)
@@ -63,13 +65,11 @@ ostream& operator << (ostream& os, const Deck& d)
         os << d.cards_[i] << " ";
 
         // 13 per line
-        if (i == 12 || i == 25 || i == 38 || i == 51)
+        if (i == 12 || i == 25 || i == 38)
         {
             os << endl;
         }
     }
 
-    os << "\n>";
+    return os;
 }
-
-int Deck::seed = 0;

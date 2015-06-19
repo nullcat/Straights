@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1434229984 source:c:\users\jaden\desktop\cs247\card\card.cpp
+1434692380 source:c:\users\jaden\desktop\cs247\card\card.cpp
 	"Card.h"
 	<string>
 	<cassert>
 
-1434641826 c:\users\jaden\desktop\cs247\card\card.h
+1434692019 c:\users\jaden\desktop\cs247\card\card.h
 	<ostream>
 	<istream>
 
@@ -17,13 +17,13 @@
 	"Card.h"
 	<istream>
 
-1434670777 source:c:\users\jaden\desktop\cs247\card\computerplayer.cpp
+1434694355 source:c:\users\jaden\desktop\cs247\card\computerplayer.cpp
 	<ostream>
 	<istream>
 	<iostream>
 	"ComputerPlayer.h"
 
-1434681971 source:c:\users\jaden\desktop\cs247\card\deck.cpp
+1434694273 source:c:\users\jaden\desktop\cs247\card\deck.cpp
 	<iostream>
 	<random>
 	"Deck.h"
@@ -35,7 +35,7 @@
 	<vector>
 	"Card.h"
 
-1434682919 source:c:\users\jaden\desktop\cs247\card\humanplayer.cpp
+1434690748 source:c:\users\jaden\desktop\cs247\card\humanplayer.cpp
 	<iostream>
 	"HumanPlayer.h"
 	"Command.h"
@@ -54,7 +54,7 @@
 	"Deck.h"
 	"Command.h"
 
-1434685907 source:c:\users\jaden\desktop\cs247\card\game.cpp
+1434694085 source:c:\users\jaden\desktop\cs247\card\game.cpp
 	<ostream>
 	<istream>
 	<iostream>
@@ -85,19 +85,21 @@
 	"Table.h"
 	"Game.h"
 
-1434686513 source:c:\users\jaden\desktop\cs247\card\table.cpp
+1434691992 source:c:\users\jaden\desktop\cs247\card\table.cpp
 	<iostream>
+	<sstream>
+	<algorithm>
 	"Table.h"
 	"Deck.h"
 
-1434686902 source:c:\users\jaden\desktop\cs247\card\player.cpp
+1434694167 source:c:\users\jaden\desktop\cs247\card\player.cpp
 	"Player.h"
 	<iostream>
 	<cassert>
 	<sstream>
 	<cmath>
 
-1434685900 c:\users\jaden\desktop\cs247\card\game.h
+1434694070 c:\users\jaden\desktop\cs247\card\game.h
 	<ostream>
 	<istream>
 	"Player.h"

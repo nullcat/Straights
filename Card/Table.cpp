@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <algorithm>
 
 #include "Table.h"
 #include "Deck.h"
@@ -35,9 +37,18 @@ string Table::getRanksString(vector<Card> cards) const
 {
     string ranks;
 
-    for(int i=0;i<cards.size();i++)
+    vector<Card> sortedCards = cards;
+    sort(sortedCards.begin(), sortedCards.end());
+
+
+    for(int i=0;i<sortedCards.size();i++)
     {
-        ranks += (int)cards[i].getRank() + " ";
+        stringstream ss;
+        ss << sortedCards[i].getRank()+1;
+        ranks += ss.str();
+
+        if(i != sortedCards.size()-1) //do not space at the end
+            ranks += " ";
     }
 
     return ranks;
@@ -45,12 +56,11 @@ string Table::getRanksString(vector<Card> cards) const
 
 ostream& operator << (ostream &os, const Table &t)
 {
-
     os << "Cards on the table:" << endl;
     os << "Clubs: " << t.getRanksString(t.getCardsOfSuit(CLUB)) << endl;
     os << "Diamonds: " << t.getRanksString(t.getCardsOfSuit(DIAMOND)) << endl;
-    os << "Hears: " << t.getRanksString(t.getCardsOfSuit(HEART)) << endl;
-    os << "Spades: " << "7" << endl;
+    os << "Hearts: " << t.getRanksString(t.getCardsOfSuit(HEART)) << endl;
+    os << "Spades: " << t.getRanksString(t.getCardsOfSuit(SPADE)) << endl;
 
     return os;
 }
