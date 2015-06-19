@@ -23,7 +23,7 @@
 	<iostream>
 	"ComputerPlayer.h"
 
-1434694273 source:c:\users\jaden\desktop\cs247\card\deck.cpp
+1434694460 source:c:\users\jaden\desktop\cs247\card\deck.cpp
 	<iostream>
 	<random>
 	"Deck.h"
@@ -54,7 +54,7 @@
 	"Deck.h"
 	"Command.h"
 
-1434694085 source:c:\users\jaden\desktop\cs247\card\game.cpp
+1434694689 source:c:\users\jaden\desktop\cs247\card\game.cpp
 	<ostream>
 	<istream>
 	<iostream>

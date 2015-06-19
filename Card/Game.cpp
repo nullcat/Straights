@@ -98,7 +98,19 @@ void Game::startNewRound()
 
     cout << "A new round begins. It's player " << starterIndex+1 << "'s turn to play." << endl;
 
-    players_[starterIndex]->makeMove(table_, deck_);
+    Type moveType = players_[starterIndex]->makeMove(table_, deck_);
+
+    if(moveType == QUIT)
+    {
+        endFlag_ = true;
+        return;
+    }
+    else if(moveType == RAGEQUIT)
+    {
+        players_[starterIndex] = convertToComputerPlayer(players_[starterIndex]);
+        cout << "Player " << starterIndex+1 << " ragequits. A computer will now take over." << endl;
+        players_[starterIndex]->makeMove(table_, deck_);    //computer makes a move
+    }
 
     //each round, each player loses 1 card, need to loop for number of cards of each player (the deal amount)
     for(int rounds = 0; rounds < DEAL_AMOUNT; rounds++)
@@ -123,8 +135,8 @@ void Game::startNewRound()
             else if(moveType == RAGEQUIT)
             {
                 players_[i] = convertToComputerPlayer(players_[i]);
-                players_[i]->makeMove(table_, deck_);
-                cout << "Player " << i+1 << " ragequits. A computer will now take over.";
+                cout << "Player " << i+1 << " ragequits. A computer will now take over." << endl;
+                players_[i]->makeMove(table_, deck_);   //computer makes a move
             }
         }
     }
