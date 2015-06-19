@@ -16,13 +16,13 @@ const int NUM_PLAYERS = 4;
 
 int main(int argc)
 {
-    Deck::seed = 0; //argc;   // set seed for random generator for shuffling
+    Deck::seed = 44; //argc;   // set seed for random generator for shuffling
 
     Deck* deck = new Deck();
     Table* table = new Table();
     vector<Player*> players; //should be 4 players
 
-    for(int i=0; i<4;i++)
+    for(int i=0; i<NUM_PLAYERS;i++)
     {
         cout << "Is player " << (i+1) << " a human(h) or computer(c)?" << endl;
 

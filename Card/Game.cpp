@@ -36,6 +36,7 @@ void Game::checkWinCondition()
 void Game::printWinners() const
 {
     int lowestScore = players_[0]->getScore();
+
     for(int i=1;i<players_.size();i++)
     {
         if(players_[i]->getScore() < lowestScore)
@@ -48,7 +49,7 @@ void Game::printWinners() const
     {
         if(players_[i]->getScore() == lowestScore)
         {
-            cout << "Player " << i+1 << " wins!";
+            cout << "Player " << i+1 << " wins!" << endl;
         }
     }
 }
@@ -71,7 +72,7 @@ int Game::getStarterPlayerNumber() const
             return i;
     }
 
-    throw "incomplete or undealt deck";
+    throw string("incomplete or undealt deck");
 }
 
 void Game::dealDeck()
@@ -122,7 +123,7 @@ void Game::startNewRound()
                 i = (starterIndex+1) % 4;
 
             // skip the last turn to account for starter's turn before any loops
-            if(i == players_.size()-1 && rounds == DEAL_AMOUNT -1)
+            if(i == (starterIndex-1) % 4 && rounds == DEAL_AMOUNT -1)
                 break;
 
             Type moveType = players_[i]->makeMove(table_, deck_);

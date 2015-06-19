@@ -182,6 +182,7 @@ void Player::getNewLegalPlays(const Table &table)
                     if(abs((int)curRank - (int)sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card
                     {
                         legalPlays_.push_back(curCard);
+                        break;
                     }
                 }
             }

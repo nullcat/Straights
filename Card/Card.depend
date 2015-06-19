@@ -54,7 +54,7 @@
 	"Deck.h"
 	"Command.h"
 
-1434694689 source:c:\users\jaden\desktop\cs247\card\game.cpp
+1434696477 source:c:\users\jaden\desktop\cs247\card\game.cpp
 	<ostream>
 	<istream>
 	<iostream>
@@ -73,7 +73,7 @@
 	<vector>
 	"Card.h"
 
-1434683057 source:c:\users\jaden\desktop\cs247\card\main.cpp
+1434695909 source:c:\users\jaden\desktop\cs247\card\main.cpp
 	<iostream>
 	<cassert>
 	"Card.h"
@@ -92,7 +92,7 @@
 	"Table.h"
 	"Deck.h"
 
-1434694167 source:c:\users\jaden\desktop\cs247\card\player.cpp
+1434695706 source:c:\users\jaden\desktop\cs247\card\player.cpp
 	"Player.h"
 	<iostream>
 	<cassert>
