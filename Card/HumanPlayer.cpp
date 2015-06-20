@@ -22,6 +22,7 @@ Type HumanPlayer::makeMove(Table& table, Deck& deck)
     while(true)
     {
         Command c;
+				cout<<">";
         cin >> c;
         try
         {

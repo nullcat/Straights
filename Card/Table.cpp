@@ -57,10 +57,10 @@ string Table::getRanksString(vector<Card> cards) const
 ostream& operator << (ostream &os, const Table &t)
 {
     os << "Cards on the table:" << endl;
-    os << "Clubs: " << t.getRanksString(t.getCardsOfSuit(CLUB)) << endl;
-    os << "Diamonds: " << t.getRanksString(t.getCardsOfSuit(DIAMOND)) << endl;
-    os << "Hearts: " << t.getRanksString(t.getCardsOfSuit(HEART)) << endl;
-    os << "Spades: " << t.getRanksString(t.getCardsOfSuit(SPADE)) << endl;
+    os << "Clubs:" << t.getRanksString(t.getCardsOfSuit(CLUB)) << endl;
+    os << "Diamonds:" << t.getRanksString(t.getCardsOfSuit(DIAMOND)) << endl;
+    os << "Hearts:" << t.getRanksString(t.getCardsOfSuit(HEART)) << endl;
+    os << "Spades:" << t.getRanksString(t.getCardsOfSuit(SPADE)) << endl;
 
     return os;
 }
