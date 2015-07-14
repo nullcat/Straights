@@ -122,8 +122,8 @@ void Game::startNewRound()
             if(i == 0 && rounds == 0)
                 i = (starterIndex+1) % 4;
 
-            // skip the last turn to account for starter's turn before any loops
-            if(i == (starterIndex-1) % 4 && rounds == DEAL_AMOUNT -1)
+            // if table is empty, end
+            if(table_.isEmpty())
                 break;
 
             Type moveType = players_[i]->makeMove(table_, deck_);
