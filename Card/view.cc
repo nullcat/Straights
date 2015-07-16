@@ -17,31 +17,80 @@
 #include "subject.h"
 #include "DeckGUI.h"
 #include <iostream>
+#include <sstream>
 
 // Creates buttons with labels. Sets butBox elements to have the same size,
 // with 10 pixels between widgets
-View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(true,10), butBox(true, 10), next_button( "next" ), reset_button( "reset" ), card(deck.null()) {
+View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), menu(false), rage_quit("I QUIT!"),start_button( "Start New Game with Seed:" ), reset_button( "Restart Game" ), card(deck.null()) {
 
 	// Sets some properties of the window.
-    set_title( "CS246 MVC example" );
+    set_title( "CS247 Straights Card Game" );
 	set_border_width( 10 );
 
 	// Add panels to the window
 	add(panels);
 
-	// Add button box and card image to the panels
-	panels.add( butBox );
-	panels.add( card );
-	card.set( deck.null() );
+    seed_input.set_text("0");
 
-	// Add buttons to the box (a container). Buttons initially invisible
-	butBox.add( next_button );
-	butBox.add( reset_button );
+    // Add componenets to the menu
+	menu.add( start_button );
+	menu.add(seed_input);
+	menu.add( reset_button );
+
+	// Add menu to the panel
+	panels.add( menu );
+
+    //initialize player info
+    for(int i=0;i<4;i++){
 
 
-	// Associate button "clicked" events with local onButtonClicked() method defined below.
-	next_button.signal_clicked().connect( sigc::mem_fun( *this, &View::nextButtonClicked ) );
-	reset_button.signal_clicked().connect( sigc::mem_fun( *this, &View::resetButtonClicked ) );
+      playerScore[i].set_label("Score: 0");
+      playerInfo[i].add(playerScore[i]);
+
+      playerDiscards[i].set_label("Discards: 0");
+      playerInfo[i].add(playerDiscards[i]);
+
+      player_status[i].set_label("Human");
+      playerInfo[i].add(player_status[i]);
+
+      std::stringstream ss;
+      ss<<"Player "<< (i+1);
+
+      playerFrame[i].set_label(ss.str());
+
+      playerFrame[i].add(playerInfo[i]);
+      playersBox.add(playerFrame[i]);
+    }
+    panels.add(playersBox);
+
+
+    //initialize table of cards
+    for(int i=0;i<4;i++){
+      for(int j=0;j<13;j++){
+        Gtk::Image * curCard = Gtk::manage(new Gtk::Image(deck.null()));
+        cardFrames[i][j].add(*curCard);
+        tableRow[i].add(cardFrames[i][j]);
+      }
+      tableComponents.add(tableRow[i]);
+    }
+    table.set_label("Cards played:");
+    table.add(tableComponents);
+    panels.add(table);
+
+    //initialize player hands
+    for(int i=0;i<13;i++){
+      Gtk::Image * curCard = Gtk::manage(new Gtk::Image(deck.null()));
+      playerHandFrames[i].add(*curCard);
+      playerHandComponents.add(playerHandFrames[i]);
+    }
+    playerHandComponents.add(rage_quit);
+    playerHand.set_label("Your hand");
+    playerHand.add(playerHandComponents);
+    panels.add(playerHand);
+
+    // Associate button "clicked" events with local onButtonClicked() method defined below.
+	//next_button.signal_clicked().connect( sigc::mem_fun( *this, &View::nextButtonClicked ) );
+	//reset_button.signal_clicked().connect( sigc::mem_fun( *this, &View::resetButtonClicked ) );
 
 
 	// The final step is to display the buttons (they display themselves)

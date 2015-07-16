@@ -30,19 +30,43 @@ public:
 private:
 	// Observer Pattern: to access Model accessors without having to downcast subject
 	Model *model_;
-	
+
 	// Strategy Pattern member (plus signal handlers)
 	Controller *controller_;
 
 	// Card Images
 	DeckGUI deck;
 
-	// Member widgets:
-	Gtk::HBox panels;      // Main window divided into two horizontal panels
-	Gtk::VBox butBox;      // Vertical boxes for stacking buttons vertically
-	Gtk::Button next_button;
+    Gtk::VBox panels;      // Main window divided into two horizontal panels
+	Gtk::HBox menu;      // Vertical boxes for stacking buttons vertically
+
+    //Menu Buttons
+	Gtk::Button start_button;
+	Gtk::Entry seed_input;
 	Gtk::Button reset_button;
+
+    //PlayerInfo widgest
+    Gtk::HBox playersBox;
+    Gtk::Frame playerFrame[4];
+    Gtk::VBox playerInfo[4];
+    Gtk::Label playerScore[4];
+    Gtk::Label playerDiscards[4];
+    Gtk::ToggleButton player_status[4];
+
+	//Table card widgets
+	Gtk::Frame table;
+	Gtk::VBox tableComponents;
+	Gtk::HBox tableRow[4];
+
 	Gtk::Image card;
+	Gtk::Frame cardFrames[4][13];
+
+	//PlayerHand Widgets
+	Gtk::Frame playerHand;
+	Gtk::HBox playerHandComponents;
+	Gtk::Frame playerHandFrames[13];
+    Gtk::Button rage_quit;
+
 
 	// Signal handlers:
 	void nextButtonClicked();

@@ -36,6 +36,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Card.cpp" />
+		<Unit filename="Card.depend" />
 		<Unit filename="Card.h" />
 		<Unit filename="Command.cpp" />
 		<Unit filename="Command.h" />
@@ -43,6 +44,8 @@
 		<Unit filename="ComputerPlayer.h" />
 		<Unit filename="Deck.cpp" />
 		<Unit filename="Deck.h" />
+		<Unit filename="DeckGUI.cc" />
+		<Unit filename="DeckGUI.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="HumanPlayer.cpp" />
@@ -51,7 +54,16 @@
 		<Unit filename="Player.h" />
 		<Unit filename="Table.cpp" />
 		<Unit filename="Table.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="controller.cc" />
+		<Unit filename="controller.h" />
+		<Unit filename="main.cc" />
+		<Unit filename="model.cc" />
+		<Unit filename="model.h" />
+		<Unit filename="observer.h" />
+		<Unit filename="subject.cc" />
+		<Unit filename="subject.h" />
+		<Unit filename="view.cc" />
+		<Unit filename="view.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
