@@ -2,6 +2,7 @@
 
 #include "HumanPlayer.h"
 #include "Command.h"
+#include <string>
 
 HumanPlayer::HumanPlayer(): Player() {}
 
@@ -22,7 +23,7 @@ Type HumanPlayer::makeMove(Table& table, Deck& deck)
     while(true)
     {
         Command c;
-				cout<<">";
+		cout<<">";
         cin >> c;
         try
         {
@@ -44,7 +45,8 @@ Type HumanPlayer::makeMove(Table& table, Deck& deck)
         }
         catch(string invalidMoveMessage)
         {
-            cout << invalidMoveMessage << endl;
+			cout << invalidMoveMessage << endl;
+
         }
     }
 }

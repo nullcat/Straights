@@ -3,9 +3,8 @@
 
 #include <ostream>
 #include <istream>
-#include <random>
 #include <vector>
-
+#include <random>
 #include "Card.h"
 
 using namespace std;

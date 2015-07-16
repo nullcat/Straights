@@ -9,6 +9,10 @@
 #include "Command.h"
 #include "Table.h"
 #include "Game.h"
+#include <gtkmm/main.h>
+#include "model.h"
+#include "controller.h"
+#include "view.h"
 
 using namespace std;
 
@@ -16,6 +20,12 @@ const int NUM_PLAYERS = 4;
 
 int main(int argc, char* argv[])
 {
+    Gtk::Main  kit( argc, argv );         // Initialize gtkmm with the command line arguments, as appropriate.
+	Model model;                          // Create model
+        Controller controller( &model );  // Create controller
+	View view( &controller, &model );     // Create the view -- is passed handle to controller and model
+	Gtk::Main::run( view );               // Show the window and return when it is closed.
+
     Deck::seed = 0; //argc;   // set seed for random generator for shuffling
 		if(argc>1){
 			Deck::seed = atoi(argv[1]);

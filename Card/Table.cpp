@@ -1,7 +1,6 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
-
 #include "Table.h"
 #include "Deck.h"
 

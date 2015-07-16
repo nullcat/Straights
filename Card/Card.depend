@@ -106,3 +106,99 @@
 	"Table.h"
 	"Deck.h"
 
+1434698598 source:c:\users\charles\desktop\cs247\straights\card\card.cpp
+	"Card.h"
+	<string>
+	<cassert>
+
+1434698598 c:\users\charles\desktop\cs247\straights\card\card.h
+	<ostream>
+	<istream>
+
+1434693527 source:c:\users\charles\desktop\cs247\straights\card\command.cpp
+	"Command.h"
+	<cassert>
+	<sstream>
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\command.h
+	"Card.h"
+	<istream>
+
+1434698598 source:c:\users\charles\desktop\cs247\straights\card\computerplayer.cpp
+	<ostream>
+	<istream>
+	<iostream>
+	"ComputerPlayer.h"
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\computerplayer.h
+	<ostream>
+	<istream>
+	"Player.h"
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\player.h
+	<ostream>
+	<istream>
+	<vector>
+	"Card.h"
+	"Table.h"
+	"Deck.h"
+	"Command.h"
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\table.h
+	<ostream>
+	<istream>
+	<vector>
+	"Card.h"
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\deck.h
+	<ostream>
+	<istream>
+	<random>
+	<vector>
+	"Card.h"
+
+1434698598 source:c:\users\charles\desktop\cs247\straights\card\deck.cpp
+	<iostream>
+	<random>
+	"Deck.h"
+
+1434700312 source:c:\users\charles\desktop\cs247\straights\card\player.cpp
+	"Player.h"
+	<iostream>
+	<cassert>
+	<sstream>
+	<cmath>
+
+1436859572 source:c:\users\charles\desktop\cs247\straights\card\game.cpp
+	<ostream>
+	<istream>
+	<iostream>
+	"Game.h"
+	"Command.h"
+	"ComputerPlayer.h"
+
+1434698598 c:\users\charles\desktop\cs247\straights\card\game.h
+	<ostream>
+	<istream>
+	"Player.h"
+	"Table.h"
+	"Deck.h"
+
+1436861902 source:c:\users\charles\desktop\cs247\straights\card\humanplayer.cpp
+	<iostream>
+	"HumanPlayer.h"
+	"Command.h"
+	<string>
+
+1434693527 c:\users\charles\desktop\cs247\straights\card\humanplayer.h
+	<ostream>
+	<istream>
+	"Player.h"
+
+1436861958 source:c:\users\charles\desktop\cs247\straights\card\table.cpp
+	<iostream>
+	<sstream>
+	<algorithm>
+	"Table.h"
+	"Deck.h"
+
