@@ -21,7 +21,7 @@ class Model;
 class Controller {
 public:
    Controller( Model* );
-   void nextButtonClicked();
+   void startNewGame(std::string);
    void resetButtonClicked();
 private:
    Model *model_;

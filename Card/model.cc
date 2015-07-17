@@ -12,30 +12,48 @@
 
 #include "model.h"
 
+using namespace std;
 
-Model::Model() : topCard_(-1) {}
-//Suits Model::suit() {
-//  if (topCard_ == -1) return NOSUIT;
-//
-//  return (Suits) (topCard_ % numSuits);
-//}
-//
-//Faces Model::face() {
-//  if (topCard_ == -1) return NOFACE;
-//
-//  return (Faces) (topCard_ / numSuits);
-//}
-//
-//void Model::nextCard() {
-//  if (topCard_ == numCards-1) return;
-//
-//  topCard_ += 1;
-//  notify();
-//
-//}
-//
-//
-//void Model::resetCards() {
-//  topCard_ = -1;
-//  notify();
-//}
+const int NUM_PLAYERS = 4;
+
+Model::Model() {}
+
+Model::~Model(){
+
+}
+
+vector<Card> Model::getTableCards() const{
+    return game_->getTableCards();
+}
+
+vector<Card> Model::getPlayerHand() const{
+    return game_->getPlayerHand();
+}
+
+void Model::startNewGame(string seed){
+
+    //if(game_){
+    //    delete game_;
+    //}
+    Deck::seed = atoi(seed.c_str());
+    Deck* deck = new Deck();
+    Table* table = new Table();
+    vector<Player*> players; //should be 4 players
+    //cout<<*deck<<endl;
+    for(int i=0; i<NUM_PLAYERS;i++)
+    {
+        players.push_back(new HumanPlayer());
+    }
+
+    Game * game = new Game(players, *table, *deck);
+    game_ = game;
+    startNewRound();
+    //delete deck;
+    //delete table;
+    //delete game;
+
+}
+void Model::startNewRound(){
+    game_->startNewRound();
+    notify();
+}

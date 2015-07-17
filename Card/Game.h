@@ -17,7 +17,10 @@ public:
     Game(vector<Player*>, Table&, Deck&);
     ~Game();
     void startNewRound();
+    void continueRound();
     bool hasEnded() const;
+    vector<Card> getPlayerHand() const;
+    vector<Card> getTableCards() const;
 private:
     void printScores() const;
     int getStarterPlayerNumber() const;

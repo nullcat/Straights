@@ -58,19 +58,24 @@ private:
 	Gtk::VBox tableComponents;
 	Gtk::HBox tableRow[4];
 
-	Gtk::Image card;
+	Gtk::Image * tableCard[4][13];
 	Gtk::Frame cardFrames[4][13];
 
 	//PlayerHand Widgets
 	Gtk::Frame playerHand;
 	Gtk::HBox playerHandComponents;
 	Gtk::Frame playerHandFrames[13];
+	Gtk::Image * playerHandCard[13];
     Gtk::Button rage_quit;
 
 
 	// Signal handlers:
-	void nextButtonClicked();
+	void startButtonClicked();
 	void resetButtonClicked();
+
+private:
+    void updateTable(std::vector<Card>);
+    void updatePlayerHand(std::vector<Card>);
 
 }; // View
 

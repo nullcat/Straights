@@ -10,11 +10,12 @@ using namespace std;
 // initializes static player count to zero
 int Player::NumberOfPlayers_ = 0;
 
-Player::Player(): score_(0), playerNumber_(++NumberOfPlayers_){}
+Player::Player(): score_(0), oldScore_(0), playerNumber_(++NumberOfPlayers_){}
 
 Player::Player(const Player& otherPlayer)
 {
     score_ = otherPlayer.getScore();
+    oldScore_ = otherPlayer.getOldScore();
     playerNumber_ = otherPlayer.getPlayerNumber();
     hand_ = otherPlayer.hand_;
 	discards_ = otherPlayer.discards_;
@@ -99,6 +100,9 @@ bool Player::hasCard(Card card) const
     }
 
     return false;
+}
+vector<Card> Player::getHand() const{
+    return hand_;
 }
 
 void Player::playCard(Card card, Table& table)

@@ -13,12 +13,13 @@
 #include "controller.h"
 #include "model.h"
 
+using namespace std;
 
 Controller::Controller(Model *m) : model_(m) {}
 
 
-void Controller::nextButtonClicked() {
-     //model_->nextCard();
+void Controller::startNewGame(string seed) {
+     model_->startNewGame(seed);
 }
 
 

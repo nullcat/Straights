@@ -16,6 +16,15 @@ Game::Game(vector<Player*> players, Table& table, Deck& deck)
 
 Game::~Game(){}
 
+
+vector<Card> Game::getPlayerHand() const{
+    return players_[getStarterPlayerNumber()]->getHand();
+}
+
+vector<Card> Game::getTableCards() const{
+    return table_.getAllCards();
+}
+
 bool Game::hasEnded() const
 {
     return endFlag_;
@@ -29,6 +38,7 @@ void Game::checkWinCondition()
         {
             endFlag_ = true;
             printWinners();
+            break;
         }
     }
 }
@@ -45,7 +55,7 @@ void Game::printWinners() const
         }
     }
 
-    for(int i=1;i<players_.size();i++)
+    for(int i=0;i<players_.size();i++)
     {
         if(players_[i]->getScore() == lowestScore)
         {
@@ -87,9 +97,12 @@ void Game::startNewRound()
 {
     table_.clearTable();
     deck_.reset();
+    cout<<deck_<<endl;
+    cout<<Deck::seed<<endl;
     deck_.shuffle();
+    cout<<deck_<<endl;
 
-    // reset players to prepare for new round
+    //reset players to prepare for new round
     for(int i = 0; i < players_.size(); i++)
         players_[i]->newRound();
 
@@ -98,7 +111,11 @@ void Game::startNewRound()
     int starterIndex = getStarterPlayerNumber();
 
     cout << "A new round begins. It's player " << starterIndex+1 << "'s turn to play." << endl;
+    //continueRound();
+}
 
+void Game::continueRound(){
+    int starterIndex = getStarterPlayerNumber();
     Type moveType = players_[starterIndex]->makeMove(table_, deck_);
 
     if(moveType == QUIT)

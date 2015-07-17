@@ -21,7 +21,7 @@
 
 // Creates buttons with labels. Sets butBox elements to have the same size,
 // with 10 pixels between widgets
-View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), menu(false), rage_quit("I QUIT!"),start_button( "Start New Game with Seed:" ), reset_button( "Restart Game" ), card(deck.null()) {
+View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), menu(false), rage_quit("I QUIT!"),start_button( "Start New Game with Seed:" ), reset_button( "Restart Game" ) {
 
 	// Sets some properties of the window.
     set_title( "CS247 Straights Card Game" );
@@ -36,6 +36,8 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
 	menu.add( start_button );
 	menu.add(seed_input);
 	menu.add( reset_button );
+
+	start_button.signal_clicked().connect(sigc::mem_fun(*this, &View::startButtonClicked));
 
 	// Add menu to the panel
 	panels.add( menu );
@@ -67,8 +69,8 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
     //initialize table of cards
     for(int i=0;i<4;i++){
       for(int j=0;j<13;j++){
-        Gtk::Image * curCard = Gtk::manage(new Gtk::Image(deck.null()));
-        cardFrames[i][j].add(*curCard);
+        tableCard[i][j] = Gtk::manage(new Gtk::Image(deck.null()));
+        cardFrames[i][j].add(*tableCard[i][j]);
         tableRow[i].add(cardFrames[i][j]);
       }
       tableComponents.add(tableRow[i]);
@@ -79,8 +81,8 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
 
     //initialize player hands
     for(int i=0;i<13;i++){
-      Gtk::Image * curCard = Gtk::manage(new Gtk::Image(deck.null()));
-      playerHandFrames[i].add(*curCard);
+      playerHandCard[i] = Gtk::manage(new Gtk::Image(deck.null()));
+      playerHandFrames[i].add(*playerHandCard[i]);
       playerHandComponents.add(playerHandFrames[i]);
     }
     playerHandComponents.add(rage_quit);
@@ -88,8 +90,7 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
     playerHand.add(playerHandComponents);
     panels.add(playerHand);
 
-    // Associate button "clicked" events with local onButtonClicked() method defined below.
-	//next_button.signal_clicked().connect( sigc::mem_fun( *this, &View::nextButtonClicked ) );
+
 	//reset_button.signal_clicked().connect( sigc::mem_fun( *this, &View::resetButtonClicked ) );
 
 
@@ -105,6 +106,8 @@ View::~View() {}
 
 
 void View::update() {
+    updateTable(model_->getTableCards());
+    updatePlayerHand(model_->getPlayerHand());
   //Suits suit = model_->suit();
   //Faces face = model_->face();
   //if ( suit == NOSUIT )
@@ -114,10 +117,27 @@ void View::update() {
 
 }
 
-void View::nextButtonClicked() {
-  controller_->nextButtonClicked();
+void View::startButtonClicked() {
+  controller_->startNewGame(seed_input.get_text());
 } // View::nextButtonClicked
 
 void View::resetButtonClicked() {
   controller_->resetButtonClicked();
 } // View::resetButtonClicked
+
+void View::updateTable(vector<Card> tableCards){
+
+}
+
+void View::updatePlayerHand(vector<Card> hand){
+    int hand_size = hand.size();
+    for(int i=0;i<13;i++){
+      Card curCard = hand[i];
+      if(i<hand_size){
+        playerHandCard[i] -> set(deck.image(curCard.getRank(),curCard.getSuit()));
+      }
+      else{
+        playerHandCard[i] -> set(deck.null());
+      }
+    }
+}

@@ -150,11 +150,11 @@
 	<vector>
 	"Card.h"
 
-1434693527 c:\users\charles\desktop\cs247\straights\card\deck.h
+1437010569 c:\users\charles\desktop\cs247\straights\card\deck.h
 	<ostream>
 	<istream>
-	<random>
 	<vector>
+	<random>
 	"Card.h"
 
 1434698598 source:c:\users\charles\desktop\cs247\straights\card\deck.cpp

@@ -16,6 +16,7 @@ public:
     void clearTable();
     bool isEmpty() const;
     vector<Card> getCardsOfSuit(Suit) const;   // used to check against cards from players
+    vector<Card> getAllCards() const;
     friend ostream& operator << (ostream&, const Table&);
 private:
     string getRanksString(vector<Card> cards) const;

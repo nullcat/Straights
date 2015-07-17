@@ -21,6 +21,9 @@ vector<Card> Table::getCardsOfSuit(Suit suit) const
 
     return suitCards;
 }
+vector<Card> Table::getAllCards() const{
+    return cards_;
+}
 
 void Table::clearTable()
 {

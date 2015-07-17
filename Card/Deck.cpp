@@ -33,6 +33,7 @@ void Deck::reset()
 
 void Deck::shuffle()
 {
+    cout<<*this<<endl;
     static mt19937 rng(seed);
 
 	int n = CARD_COUNT;
