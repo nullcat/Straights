@@ -21,8 +21,19 @@ Controller::Controller(Model *m) : model_(m) {}
 void Controller::startNewGame(string seed) {
      model_->startNewGame(seed);
 }
+void Controller::startNewRound() {
+     model_->startNewRound();
+}
 
-
-void Controller::resetButtonClicked() {
-     //model_->resetCards();
+void Controller::togglePlayer(int position){
+    model_->togglePlayer(position);
+}
+void Controller::makeMove(int position){
+    model_->makeMove(position);
+}
+void Controller::quitGame(){
+    model_->quit();
+}
+void Controller::rageQuit(){
+    model_->makeMove(-1);
 }

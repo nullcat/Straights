@@ -51,7 +51,7 @@ private:
     Gtk::VBox playerInfo[4];
     Gtk::Label playerScore[4];
     Gtk::Label playerDiscards[4];
-    Gtk::ToggleButton player_status[4];
+    Gtk::Button player_status[4];
 
 	//Table card widgets
 	Gtk::Frame table;
@@ -64,18 +64,27 @@ private:
 	//PlayerHand Widgets
 	Gtk::Frame playerHand;
 	Gtk::HBox playerHandComponents;
-	Gtk::Frame playerHandFrames[13];
+	Gtk::Button * playerHandButton[13];
 	Gtk::Image * playerHandCard[13];
     Gtk::Button rage_quit;
 
 
-	// Signal handlers:
+	// Event handlers:
 	void startButtonClicked();
 	void resetButtonClicked();
+	void playerHandCardClicked(int position);
+	void statusButtonClicked(int position);
+	void ragequitButtonClicked();
+	void autostartNewRound();
 
-private:
+    //helper functions
     void updateTable(std::vector<Card>);
     void updatePlayerHand(std::vector<Card>);
+    void updateRound();
+    void prepareNextRound();
+    void initialize();
+    void clearCards();
+
 
 }; // View
 

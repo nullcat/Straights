@@ -10,7 +10,7 @@ ComputerPlayer::~ComputerPlayer(){}
 
 ComputerPlayer::ComputerPlayer(const Player& humanPlayer): Player(humanPlayer){}
 
-Type ComputerPlayer::makeMove(Table& table, Deck& deck)
+Type ComputerPlayer::makeMove(Table& table, Deck& deck,Card card)
 {
     getNewLegalPlays(table);
     if(legalPlays_.empty())

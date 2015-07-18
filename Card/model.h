@@ -27,12 +27,26 @@ public:
     virtual ~Model();
     void startNewGame(std::string);
     void startNewRound();
+
+    void makeMove(int position);
+    void togglePlayer(int position);
+    void quit();
+    void ragequit();
+    bool gameStarted() const;
+    bool isHuman(int position) const;
+    bool roundOver() const;
+    bool gameOver() const;
     std::vector<Card> getTableCards() const;
     std::vector<Card> getPlayerHand() const;
+    std::vector<bool> getPlayerType() const;
+    std::vector<int> getPlayerScores() const;
+    std::vector<int> getPlayerDiscards() const;
 
 
 private:
     Game * game_;
+    bool isHuman_[4];
+    bool gameStarted_;
 
 
 }; // Model

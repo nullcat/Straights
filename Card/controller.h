@@ -22,7 +22,11 @@ class Controller {
 public:
    Controller( Model* );
    void startNewGame(std::string);
-   void resetButtonClicked();
+   void startNewRound();
+   void quitGame();
+   void rageQuit();
+   void togglePlayer(int position);
+   void makeMove(int position);
 private:
    Model *model_;
 }; // Controller

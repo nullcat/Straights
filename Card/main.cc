@@ -26,38 +26,38 @@ int main(int argc, char* argv[])
 	View view( &controller, &model );     // Create the view -- is passed handle to controller and model
 	Gtk::Main::run( view );               // Show the window and return when it is closed.
 
-    Deck::seed = 0; //argc;   // set seed for random generator for shuffling
-		if(argc>1){
-			Deck::seed = atoi(argv[1]);
-		}
-    Deck* deck = new Deck();
-    Table* table = new Table();
-    vector<Player*> players; //should be 4 players
-
-    for(int i=0; i<NUM_PLAYERS;i++)
-    {
-        cout << "Is player " << (i+1) << " a human(h) or a computer(c)?" << endl;
-				cout <<">";
-        char type;
-        cin >> type;
-        assert(type =='h' || type == 'c');
-
-        if(type == 'h')
-            players.push_back(new HumanPlayer());
-        else if(type == 'c')
-            players.push_back(new ComputerPlayer());
-    }
-
-    Game* game = new Game(players, *table, *deck);
-
-    while(!game->hasEnded())
-    {
-        game->startNewRound();
-    }
-
-    delete deck;
-    delete table;
-    delete game;
+//    Deck::seed = 0; //argc;   // set seed for random generator for shuffling
+//		if(argc>1){
+//			Deck::seed = atoi(argv[1]);
+//		}
+//    Deck* deck = new Deck();
+//    Table* table = new Table();
+//    vector<Player*> players; //should be 4 players
+//
+//    for(int i=0; i<NUM_PLAYERS;i++)
+//    {
+//        cout << "Is player " << (i+1) << " a human(h) or a computer(c)?" << endl;
+//				cout <<">";
+//        char type;
+//        cin >> type;
+//        assert(type =='h' || type == 'c');
+//
+//        if(type == 'h')
+//            players.push_back(new HumanPlayer());
+//        else if(type == 'c')
+//            players.push_back(new ComputerPlayer());
+//    }
+//
+//    Game* game = new Game(players, *table, *deck);
+//
+//    while(!game->hasEnded())
+//    {
+//        game->startNewRound();
+//    }
+//
+//    delete deck;
+//    delete table;
+//    delete game;
 
     return 0;
 }

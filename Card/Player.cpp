@@ -85,6 +85,10 @@ int Player::getPlayerNumber() const
     return playerNumber_;
 }
 
+int Player::getDiscards() const{
+    return discards_.size();
+}
+
 //Card Player::findCard(Card card) const
 //{
 //}
