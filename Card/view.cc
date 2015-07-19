@@ -67,19 +67,30 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
     }
     panels.add(playersBox);
 
+//initialize instructions
+    instrucFrame.set_label("Instructions");
+    instrucLabel.set_alignment(0.5,0.5);
+    instrucFrame.add(instrucLabel);
+    panels.add(instrucFrame);
 
     //initialize table of cards
     for(int i=0;i<4;i++){
       for(int j=0;j<13;j++){
         tableCard[i][j] = Gtk::manage(new Gtk::Image(deck.null()));
-        cardFrames[i][j].add(*tableCard[i][j]);
-        tableRow[i].add(cardFrames[i][j]);
+        cardFrames[i][j] = Gtk::manage(new Gtk::Button());
+        cardFrames[i][j]->set_image(*tableCard[i][j]);
+        cardFrames[i][j]->set_sensitive(false);
+        Card card((Suit)i,(Rank)j);
+        cardFrames[i][j]->signal_clicked().connect( sigc::bind<Card>( sigc::mem_fun(*this, &View::tabelCardButtonClicked), card));
+        tableRow[i].add(*cardFrames[i][j]);
       }
       tableComponents.add(tableRow[i]);
     }
     table.set_label("Cards played:");
     table.add(tableComponents);
     panels.add(table);
+
+
 
     //initialize player hands
     for(int i=0;i<13;i++){
@@ -94,12 +105,11 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), panels(false), 
     rage_quit.set_sensitive(false);
     //player_status[i].signal_clicked().connect( sigc::bind<int>( sigc::mem_fun(*this, &View::statusButtonClicked), i));
     playerHandComponents.add(rage_quit);
-    playerHand.set_label("Your hand");
-    playerHand.add(playerHandComponents);
-    panels.add(playerHand);
+    playerHandFrame.set_label("Your hand");
+    playerHandFrame.add(playerHandComponents);
+    panels.add(playerHandFrame);
 
 
-	//reset_button.signal_clicked().connect( sigc::mem_fun( *this, &View::resetButtonClicked ) );
 
 
 	// The final step is to display the buttons (they display themselves)
@@ -126,6 +136,16 @@ void View::statusButtonClicked(int position){
 void View::playerHandCardClicked(int position){
   controller_->makeMove(position);
 }
+void View::tabelCardButtonClicked(Card card){
+  vector<Card> hand = model_->getPlayerHand();
+  for(int i=0;i<hand.size();i++){
+    if(card == hand[i]){
+        controller_->makeMove(i);
+        break;
+    }
+  }
+
+}
 void View::ragequitButtonClicked(){
   controller_->rageQuit();
 }
@@ -135,23 +155,30 @@ void View::autostartNewRound(){
 
 
 void View::update() {
-    if(model_->gameStarted()){
-        if(model_->roundOver()){
-            prepareNextRound();
-        }
-        else{
-            updateRound();
-        }
-    }
-    else{
+    GameState state= model_->getState();
+    switch(state){
+    case SETUP:
         initialize();
+        break;
+    case RUNNING:
+        updateRound();
+        break;
+    case ROUND_END:
+        prepareNextRound();
+        break;
+    case GAME_END:
+        endGame();
+        break;
     }
 }
 
 
 void View::initialize(){
+    clearCards();
+
+    instrucLabel.set_label("");
     for(int i=0;i<4;i++){
-      clearCards();
+
       player_status[i].set_sensitive(true);
       playerScore[i].set_label("Score: 0");
       playerDiscards[i].set_label("Discards: 0");
@@ -163,14 +190,32 @@ void View::initialize(){
         player_status[i].set_label("Computer");
       }
     }
+
     rage_quit.set_sensitive(false);
 }
 
 void View::updateRound(){
-    updateTable(model_->getTableCards());
-    updatePlayerHand(model_->getPlayerHand());
+
 
     vector<int> discards = model_->getPlayerDiscards();
+    vector<Card> tabelCards = model_->getTableCards();
+    vector<Card> legalPlays = model_->getLegalPlays();
+    vector<Card> playerHand = model_->getPlayerHand();
+    int playerPosition = model_->getCurrentPlayerPosition();
+
+    updateTable(tabelCards,legalPlays,playerHand);
+    updatePlayerHand(playerHand,legalPlays);
+
+    stringstream instrucstream;
+    instrucstream<<"It's player "<<playerPosition+1<<"'s turn. ";
+    if(legalPlays.size()==0){
+        instrucstream<<"You have no valid moves. Please choose a card to discard";
+    }
+    else{
+        instrucstream<<"Please choose a card to play.";
+    }
+    instrucLabel.set_label(instrucstream.str());
+
 
     for(int i=0;i<4;i++){
       stringstream discardstream;
@@ -186,8 +231,32 @@ void View::updateRound(){
     }
 }
 void View::prepareNextRound(){
-
     clearCards();
+    updateScores();
+    printResults();
+    autostartNewRound(); //automatically start the next round
+}
+void View::endGame(){
+    updateScores();
+    printResults();
+    printWinners();
+    resetButtonClicked(); //automatically resets the game
+}
+
+void View::printResults(){
+    Gtk::MessageDialog dialog(*this,model_->getResults());
+    dialog.show_all_children();
+    dialog.run();
+    dialog.hide();
+}
+void View::printWinners(){
+    Gtk::MessageDialog dialog(*this,model_->getWinners());
+    dialog.show_all_children();
+    dialog.run();
+    dialog.hide();
+
+}
+void View::updateScores(){
     vector<int> discards = model_->getPlayerDiscards();
     vector<int> scores= model_->getPlayerScores();
 
@@ -200,37 +269,78 @@ void View::prepareNextRound(){
 
       discardstream<<"Discards: "<<discards[i];
       playerDiscards[i].set_label(discardstream.str());
+      player_status[i].set_sensitive(false);
     }
-    autostartNewRound(); //start the next round automatically
 }
 
+void View::updateTable(vector<Card> tableCards, vector<Card> validCards,vector<Card> hand){
 
 
-void View::updateTable(vector<Card> tableCards){
+    for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 13; j++) {
+			cardFrames[i][j]->set_sensitive(false);
+		}
+	}
+
     int length = tableCards.size();
+    int valid_card_size = validCards.size();
+
+    for(int i=0;i<valid_card_size;i++){
+        Card curCard = validCards[i];
+        Rank r = curCard.getRank();
+        Suit s = curCard.getSuit();
+
+        if(find(hand.begin(),hand.end(),curCard)!=hand.end()){
+            cardFrames[s][r]->set_sensitive(true);
+        }
+        else{
+            cardFrames[s][r]->set_sensitive(false);
+        }
+        //cardFrames[s][r].set_label("valid");
+        //cardFrames[s][r].set_border_width(50);
+    }
+
+
     for(int i=0;i<length;i++){
         Rank r = tableCards[i].getRank();
         Suit s = tableCards[i].getSuit();
         tableCard[s][r]->set(deck.image(r,s));
+
+        cardFrames[s][r]->set_sensitive(true);
     }
 }
 
 
 
 
-void View::updatePlayerHand(vector<Card> hand){
+void View::updatePlayerHand(vector<Card> hand,vector<Card> validCards){
     int hand_size = hand.size();
+    int valid_card_size = validCards.size();
+
+
+
     for(int i=0;i<13;i++){
-      Card curCard = hand[i];
       if(i<hand_size){
+        Card curCard = hand[i];
         playerHandCard[i] -> set(deck.image(curCard.getRank(),curCard.getSuit()));
+        if(find(validCards.begin(),validCards.end(),curCard)!=validCards.end()){
+            playerHandButton[i]->set_sensitive(true);
+        }
+        else{
+            playerHandButton[i]->set_sensitive(false);
+        }
+        if(valid_card_size == 0){
+            playerHandButton[i]->set_sensitive(true);
+        }
       }
       else{
         playerHandCard[i] -> set(deck.null());
+        playerHandButton[i]->set_sensitive(false);
       }
-      playerHandButton[i]->set_sensitive(true);
+      //playerHandButton[i]->set_sensitive(true);
       rage_quit.set_sensitive(true);
     }
+
 }
 void View::clearCards(){
     for (int i = 0; i < 13; i++) {
@@ -240,6 +350,7 @@ void View::clearCards(){
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 13; j++) {
 			tableCard[i][j]->set(deck.null());
+			cardFrames[i][j]->set_sensitive(false);
 		}
 	}
 }

@@ -21,6 +21,7 @@ private:
 
 bool operator==(const Card &, const Card &);
 bool operator<(const Card&, const Card&);
+bool operator>(const Card&, const Card&);
 
 //output/input Card in the format <rank><suit>
 std::ostream &operator<<(std::ostream &, const Card &);

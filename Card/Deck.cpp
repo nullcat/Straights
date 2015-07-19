@@ -3,7 +3,11 @@
 
 #include "Deck.h"
 
+using namespace std;
+
 int Deck::seed = 0;
+mt19937 Deck::rng(Deck::seed);
+
 
 Deck::Deck()
 {
@@ -33,12 +37,12 @@ void Deck::reset()
 
 void Deck::shuffle()
 {
-    static mt19937 rng(seed);
 
+    //Deck::rng.seed(Deck::seed);
 	int n = CARD_COUNT;
 
 	while ( n > 1 ) {
-		int k = (int) (rng() % n);
+		int k = (int) (Deck::rng() % n);
 		--n;
 		swap(cards_[n], cards_[k]);
 	}

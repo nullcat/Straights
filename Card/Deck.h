@@ -6,8 +6,9 @@
 #include <vector>
 #include <random>
 #include "Card.h"
+#include
 
-using namespace std;
+//using namespace std;
 
 const int CARD_COUNT(52);   // mostly relayed to Deck class but may need to be used outside of deck class
 const int DEAL_AMOUNT(13);  // same idea as CARD_COUNT
@@ -18,12 +19,13 @@ public:
     ~Deck();
     void reset();
 	void shuffle();
-	vector<Card> dealCards();
+	std::vector<Card> dealCards();
     static int seed;
-    friend ostream& operator << (ostream&, const Deck&);
+    static std::mt19937 rng;
+    friend std::ostream& operator << (std::ostream&, const Deck&);
 private:
     int deckDepth;  //tracks dealt cards, each time dealCards() is called, +13 to depth
-	vector<Card> cards_;
+	std::vector<Card> cards_;
 };
 
 #endif

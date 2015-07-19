@@ -23,6 +23,10 @@ bool operator==(const Card &a, const Card &b){
 bool operator<(const Card &a, const Card &b){
 	return a.getRank() < b.getRank();
 }
+bool operator>(const Card &a, const Card &b){
+	return a.getRank() > b.getRank();
+}
+
 
 ostream &operator<<(ostream &out, const Card &c){
 	string suits[SUIT_COUNT] = {"C", "D", "H", "S"};

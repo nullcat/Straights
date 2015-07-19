@@ -16,6 +16,7 @@
 #include <gtkmm.h>
 #include "DeckGUI.h"
 #include "observer.h"
+#include "algorithm"
 
 class Controller;
 class Model;
@@ -53,20 +54,27 @@ private:
     Gtk::Label playerDiscards[4];
     Gtk::Button player_status[4];
 
+    //Instructions widgets
+    Gtk::Frame instrucFrame;
+    Gtk::Label instrucLabel;
+
 	//Table card widgets
 	Gtk::Frame table;
 	Gtk::VBox tableComponents;
 	Gtk::HBox tableRow[4];
 
 	Gtk::Image * tableCard[4][13];
-	Gtk::Frame cardFrames[4][13];
+	Gtk::Button * cardFrames[4][13];
 
 	//PlayerHand Widgets
-	Gtk::Frame playerHand;
+	Gtk::Frame playerHandFrame;
 	Gtk::HBox playerHandComponents;
 	Gtk::Button * playerHandButton[13];
 	Gtk::Image * playerHandCard[13];
     Gtk::Button rage_quit;
+
+
+    //Message Dialog
 
 
 	// Event handlers:
@@ -74,16 +82,21 @@ private:
 	void resetButtonClicked();
 	void playerHandCardClicked(int position);
 	void statusButtonClicked(int position);
+	void tabelCardButtonClicked(Card card);
 	void ragequitButtonClicked();
 	void autostartNewRound();
 
     //helper functions
-    void updateTable(std::vector<Card>);
-    void updatePlayerHand(std::vector<Card>);
+    void updateTable(std::vector<Card>,std::vector<Card>,std::vector<Card>);
+    void updatePlayerHand(std::vector<Card>,std::vector<Card>);
     void updateRound();
     void prepareNextRound();
     void initialize();
     void clearCards();
+    void printResults();
+    void printWinners();
+    void updateScores();
+    void endGame();
 
 
 }; // View

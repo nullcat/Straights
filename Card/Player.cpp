@@ -57,6 +57,16 @@ void Player::printDiscardsAndScore() const
     cout << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
 }
 
+
+string Player::getDiscardsAndScore() const
+{
+    stringstream ss;
+    ss << "Player " << getPlayerNumber() << "'s discards: "
+    <<getCards(discards_)
+    << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
+    return ss.str();
+}
+
 void Player::printCards(vector<Card> cards) const
 {
     for(int i = 0; i < cards.size(); i++)
@@ -68,6 +78,20 @@ void Player::printCards(vector<Card> cards) const
     }
 
     cout << endl;
+}
+string Player::getCards(vector<Card> cards) const
+{
+    stringstream ss;
+    for(int i = 0; i < cards.size(); i++)
+    {
+        ss << cards[i];
+
+        if(i != cards.size()-1)
+            ss << " ";
+    }
+
+    ss << endl;
+    return ss.str();
 }
 
 int Player::getScore() const
@@ -107,6 +131,10 @@ bool Player::hasCard(Card card) const
 }
 vector<Card> Player::getHand() const{
     return hand_;
+}
+
+std::vector <Card> Player::getLegalPlays() const{
+    return legalPlays_;
 }
 
 void Player::playCard(Card card, Table& table)
@@ -195,7 +223,6 @@ void Player::getNewLegalPlays(const Table &table)
                 }
             }
         }
-        //printLegalPlays();
     }
 }
 

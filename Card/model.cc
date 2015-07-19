@@ -16,7 +16,7 @@ using namespace std;
 
 const int NUM_PLAYERS = 4;
 
-Model::Model():gameStarted_(false) {
+Model::Model():state_(SETUP) {
     for(int i=0;i<NUM_PLAYERS;i++){
         isHuman_[i] = true;
     }
@@ -25,14 +25,8 @@ Model::Model():gameStarted_(false) {
 Model::~Model(){
 
 }
-bool Model::gameStarted() const{
-    return gameStarted_;
-}
-bool Model::roundOver() const{
-    return game_->roundEnded();
-}
-bool Model::gameOver() const{
-    return game_->gameEnded();
+GameState Model::getState() const{
+    return state_;
 }
 
 bool Model::isHuman(int position) const{
@@ -50,16 +44,28 @@ vector<int> Model::getPlayerScores() const{
 vector<int> Model::getPlayerDiscards() const{
     return game_->getPlayerDiscards();
 }
+string Model::getWinners() const{
+    if(state_ == GAME_END){
+        return game_->getWinners();
+    }
+    else{
+        throw "wrong state exception";
+    }
+}
+
+string Model::getResults() const{
+    return game_->getResults();
+}
 
 void Model::startNewGame(string seed){
 
-    //if(game_){
-    //    delete game_;
-    //}
     Deck::seed = atoi(seed.c_str());
     Deck* deck = new Deck();
     Table* table = new Table();
+    Player::NumberOfPlayers_ = 0;
+
     vector<Player*> players; //should be 4 players
+
     //cout<<*deck<<endl;
     for(int i=0; i<NUM_PLAYERS;i++)
     {
@@ -73,20 +79,15 @@ void Model::startNewGame(string seed){
 
     Game * game = new Game(players, *table, *deck);
     game_ = game;
-    gameStarted_ = true;
-
+    state_ = RUNNING;
+    Deck::rng.seed(Deck::seed);
     startNewRound();
-    //delete deck;
-    //delete table;
-    //delete game;
 
 }
 void Model::startNewRound(){
 
     game_->startNewRound();
-    if(game_->gameEnded()){
-        gameStarted_ = false;
-    }
+    determineState();
     notify();
 }
 
@@ -97,15 +98,14 @@ void Model::makeMove(int position){
         isHuman_[index] = false;
     }
     game_->resumeRound(position);
-    if(game_->gameEnded()){
-        gameStarted_ = false;
-    }
+
+    determineState();
     notify();
 }
 void Model::quit(){
-    if(gameStarted_){
-        delete game;
-        gameStarted_ = false;
+    if(state_!=SETUP){
+        delete game_;
+        state_ = SETUP;
         notify();
     }
 }
@@ -116,5 +116,23 @@ void Model::ragequit(){
 void Model::togglePlayer(int position){
     isHuman_[position] = !isHuman_[position];
     notify();
+}
+void Model::determineState(){
+    if(game_->gameEnded()){
+        state_ = GAME_END;
+    }
+    else if(game_->roundEnded()){
+        state_ = ROUND_END;
+    }
+    else{
+        state_ = RUNNING;
+    }
+
+}
+std::vector<Card> Model::getLegalPlays() const{
+    return game_->getLegalPlays();
+}
+int Model::getCurrentPlayerPosition() const{
+    return game_->getCurrentPlayerPosition();
 }
 

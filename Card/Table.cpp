@@ -13,7 +13,7 @@ vector<Card> Table::getCardsOfSuit(Suit suit) const
 {
     vector<Card> suitCards;
 
-    for(int i=0;i<cards_.size();i++)
+    for(int i=0; i<cards_.size(); i++)
     {
         if(cards_[i].getSuit()==suit)
             suitCards.push_back(cards_[i]);
@@ -21,7 +21,8 @@ vector<Card> Table::getCardsOfSuit(Suit suit) const
 
     return suitCards;
 }
-vector<Card> Table::getAllCards() const{
+vector<Card> Table::getAllCards() const
+{
     return cards_;
 }
 
@@ -43,7 +44,7 @@ string Table::getRanksString(vector<Card> cards) const
     sort(sortedCards.begin(), sortedCards.end());
 
 
-    for(int i=0;i<sortedCards.size();i++)
+    for(int i=0; i<sortedCards.size(); i++)
     {
         stringstream ss;
         ss << sortedCards[i].getRank()+1;
