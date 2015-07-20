@@ -1,12 +1,6 @@
 /*
- * MVC example of GTKmm program
- *
  * Controller class.  Is responsible for translating UI events (from the View)
  * into method calls to the Model.
- *
- *  Created by Jo Atlee on 06/07/09.
- *  Copyright 2009 UW. All rights reserved.
- *
  */
 
 
@@ -26,7 +20,7 @@ public:
    void quitGame();
    void rageQuit();
    void togglePlayer(int position);
-   void makeMove(int position);
+   void playOrDiscard(int position);
 private:
    Model *model_;
 }; // Controller

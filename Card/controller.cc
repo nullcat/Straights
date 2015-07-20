@@ -17,23 +17,33 @@ using namespace std;
 
 Controller::Controller(Model *m) : model_(m) {}
 
-
-void Controller::startNewGame(string seed) {
-     model_->startNewGame(seed);
+//tell the model to start new game
+void Controller::startNewGame(string seed)
+{
+    model_->startNewGame(seed);
 }
-void Controller::startNewRound() {
-     model_->startNewRound();
+//instruct model to start new round
+void Controller::startNewRound()
+{
+    model_->startNewRound();
 }
-
-void Controller::togglePlayer(int position){
+//instruct the model to change the type of player (eg human->computer)
+void Controller::togglePlayer(int position)
+{
     model_->togglePlayer(position);
 }
-void Controller::makeMove(int position){
-    model_->makeMove(position);
+//instruct the model to play or discard the current player's hand
+void Controller::playOrDiscard(int position)
+{
+    model_->playOrDiscard(position);
 }
-void Controller::quitGame(){
+//insturct the model to convert the current player into computer and then make a move
+void Controller::rageQuit()
+{
+    model_->ragequit();
+}
+//instruct the model to terminate the current game
+void Controller::quitGame()
+{
     model_->quit();
-}
-void Controller::rageQuit(){
-    model_->makeMove(-1);
 }

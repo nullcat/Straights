@@ -7,7 +7,6 @@
 
 #include "Card.h"
 
-using namespace std;
 
 class Table{
 public:
@@ -15,12 +14,12 @@ public:
     void addCard(Card card);
     void clearTable();
     bool isEmpty() const;
-    vector<Card> getCardsOfSuit(Suit) const;   // used to check against cards from players
-    vector<Card> getAllCards() const;
-    friend ostream& operator << (ostream&, const Table&);
+    std::vector<Card> getCardsOfSuit(Suit) const;   // used to check against cards from players
+    std::vector<Card> getAllCards() const;
+    friend std::ostream& operator << (std::ostream&, const Table&);
 private:
-    string getRanksString(vector<Card> cards) const;
-    vector<Card> cards_;
+    std::string getRanksString(std::vector<Card> cards) const;
+    std::vector<Card> cards_;
 };
 
 #endif

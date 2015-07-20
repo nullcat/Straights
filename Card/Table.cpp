@@ -4,6 +4,8 @@
 #include "Table.h"
 #include "Deck.h"
 
+using namespace std;
+
 void Table::addCard(Card card)
 {
     cards_.push_back(card);

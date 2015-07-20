@@ -22,12 +22,7 @@ Deck::Deck()
 
 Deck::~Deck()
 {
-//    while(!cards_.empty())
-//    {
-//        Card *tmpCard = cards_.back();
-//        cards_.pop_back();
-//        delete tmpCard;
-//    }
+
 }
 
 void Deck::reset()
@@ -39,13 +34,14 @@ void Deck::shuffle()
 {
 
     //Deck::rng.seed(Deck::seed);
-	int n = CARD_COUNT;
+    int n = CARD_COUNT;
 
-	while ( n > 1 ) {
-		int k = (int) (Deck::rng() % n);
-		--n;
-		swap(cards_[n], cards_[k]);
-	}
+    while ( n > 1 )
+    {
+        int k = (int) (Deck::rng() % n);
+        --n;
+        swap(cards_[n], cards_[k]);
+    }
 }
 
 vector<Card> Deck::dealCards()

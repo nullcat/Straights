@@ -3,10 +3,10 @@
 
 #include <ostream>
 #include <istream>
+#include <string>
 
 #include "Player.h"
 
-using namespace std;
 
 class HumanPlayer : public Player
 {
@@ -14,7 +14,7 @@ public:
 	HumanPlayer();
 	~HumanPlayer();
 	void printHand() const;
-	Type makeMove(Table& table, Deck& deck,Card card);
+	Type makeMove(Table& table, Deck& deck,Command c);
 };
 
 #endif

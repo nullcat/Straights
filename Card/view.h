@@ -64,7 +64,7 @@ private:
 	Gtk::HBox tableRow[4];
 
 	Gtk::Image * tableCard[4][13];
-	Gtk::Button * cardFrames[4][13];
+	Gtk::Button * tableCardButtons[4][13];
 
 	//PlayerHand Widgets
 	Gtk::Frame playerHandFrame;
@@ -74,30 +74,29 @@ private:
     Gtk::Button rage_quit;
 
 
-    //Message Dialog
-
-
 	// Event handlers:
-	void startButtonClicked();
-	void resetButtonClicked();
-	void playerHandCardClicked(int position);
-	void statusButtonClicked(int position);
-	void tabelCardButtonClicked(Card card);
-	void ragequitButtonClicked();
-	void autostartNewRound();
+	void startButtonClicked();                                                  //forward start new game button event to controller
+	void quitGameButtonClicked();                                               //forward quit game button event to controller
+    void playerHandCardClicked(int position);                                   //forward playing a card from hand event to controller
+	void playerStatusButtonClicked(int position);                               //forward changing the status (human or computer) to controller
+	void tabelCardButtonClicked(Card card);                                     //forward playing a card from table event to controller
+	void ragequitButtonClicked();                                               //forward clicking the ragequit button to controller
+	void autostartNewRound();                                                   //tells controller to start a new round
+
+    //main update functions
+    void initialize();                                                          //when model is in state SETUP
+    void updateRound();                                                         //when model is in state RUNNING
+    void prepareNextRound();                                                    //when model is in state ROUND_END
+    void endGame();                                                             //when model is in state GAME_END
 
     //helper functions
-    void updateTable(std::vector<Card>,std::vector<Card>,std::vector<Card>);
-    void updatePlayerHand(std::vector<Card>,std::vector<Card>);
-    void updateRound();
-    void prepareNextRound();
-    void initialize();
+    void updateTable(std::vector<Card>,std::vector<Card>,std::vector<Card>);   //update table with information on valid moves, and table cards
+    void updatePlayerHand(std::vector<Card>,std::vector<Card>);                //update player hand with information on valid moves
     void clearCards();
     void printResults();
     void printWinners();
     void updateScores();
-    void endGame();
-
+    void updatePlayerType(bool);                                                //update the player/computer buttons, true to allow interaction
 
 }; // View
 

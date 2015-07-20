@@ -17,14 +17,16 @@ Game::Game(vector<Player*> players, Table& table, Deck& deck)
     roundEndFlag_ = false;
 }
 
-Game::~Game(){}
+Game::~Game() {}
 
 
-vector<Card> Game::getPlayerHand() const{
+vector<Card> Game::getPlayerHand() const
+{
     return currentPlayer_->getHand();
 }
 
-vector<Card> Game::getTableCards() const{
+vector<Card> Game::getTableCards() const
+{
     return table_.getAllCards();
 }
 
@@ -32,12 +34,13 @@ bool Game::gameEnded() const
 {
     return endFlag_;
 }
-bool Game::roundEnded() const{
+bool Game::roundEnded() const
+{
     return roundEndFlag_;
 }
 void Game::checkWinCondition()
 {
-    for(int i=0;i<players_.size();i++)
+    for(int i=0; i<players_.size(); i++)
     {
         if(players_[i]->getScore() >= 80)
         {
@@ -52,14 +55,14 @@ string Game::getWinners() const
 {
     stringstream ss;
     int lowestScore = players_[0]->getScore();
-    for(int i=1;i<players_.size();i++)
+    for(int i=1; i<players_.size(); i++)
     {
         if(players_[i]->getScore() < lowestScore)
         {
             lowestScore = players_[i]->getScore();
         }
     }
-    for(int i=0;i<players_.size();i++)
+    for(int i=0; i<players_.size(); i++)
     {
         if(players_[i]->getScore() == lowestScore)
         {
@@ -72,7 +75,7 @@ string Game::getWinners() const
 string Game::getResults() const
 {
     stringstream ss;
-    for(int i=0;i<players_.size();i++)
+    for(int i=0; i<players_.size(); i++)
     {
         ss << players_[i]->getDiscardsAndScore();
     }
@@ -81,41 +84,25 @@ string Game::getResults() const
 
 void Game::printWinners() const
 {
-    int lowestScore = players_[0]->getScore();
-
-    for(int i=1;i<players_.size();i++)
-    {
-        if(players_[i]->getScore() < lowestScore)
-        {
-            lowestScore = players_[i]->getScore();
-        }
-    }
-
-    for(int i=0;i<players_.size();i++)
-    {
-        if(players_[i]->getScore() == lowestScore)
-        {
-            cout << "Player " << i+1 << " wins!" << endl;
-        }
-    }
+    cout<<getWinners();
 }
 
 void Game::printScores() const
 {
-    for(int i=0;i<players_.size();i++)
-    {
-        players_[i]->printDiscardsAndScore();
-    }
+    cout<<getResults();
 }
 
-int Game::getStarterPlayerNumber() const
+void Game::setStartingPlayerNumber()
 {
     Card sevenSpade = Card(SPADE, SEVEN);
 
-    for(int i=0;i<players_.size();i++)
+    for(int i=0; i<players_.size(); i++)
     {
         if(players_[i]->hasCard(sevenSpade))
-            return i;
+        {
+            startingPlayerIndex_ = i;
+            return;
+        }
     }
 
     throw string("incomplete or undealt deck");
@@ -123,7 +110,7 @@ int Game::getStarterPlayerNumber() const
 
 void Game::dealDeck()
 {
-    for(int i=0; i<players_.size();i++)
+    for(int i=0; i<players_.size(); i++)
     {
         players_[i]->addCards(deck_.dealCards());
     }
@@ -141,32 +128,22 @@ void Game::startNewRound()
         players_[i]->newRound();
 
     dealDeck();
+    setStartingPlayerNumber();
 
-    startingPlayerIndex_ = getStarterPlayerNumber();
-    playerIndex_ = startingPlayerIndex_;
-    currentPlayer_ = players_[playerIndex_];
+    currentPlayer_ = players_[startingPlayerIndex_];
 
     cout << "A new round begins. It's player " << startingPlayerIndex_+1 << "'s turn to play." << endl;
-
-    Card dummy_card = Card(SUIT_COUNT,RANK_COUNT); //since we don't know which card to play or discard, we make this dummy card
-    Type moveType = currentPlayer_->makeMove(table_, deck_, dummy_card);
-    //either we need player input or the move is invalid, we pause this round
-    if(moveType == BAD_COMMAND){
-        return;
-    }
     playRound();
 }
 
-void Game::resumeRound(int position){
-    //TODO: workaround might write better code later
-    Card card = Card(SUIT_COUNT,RANK_COUNT);
+//handles the play, discard, quit and ragequit commands
+void Game::resumeRound(Command c)
+{
 
-    if(position>=0){
-        card = currentPlayer_->getHand()[position];
-    }
-    Type moveType = currentPlayer_->makeMove(table_, deck_, card);
+    Type moveType = currentPlayer_->makeMove(table_, deck_, c);
 
-    if(moveType == BAD_COMMAND){
+    if(moveType == BAD_COMMAND)
+    {
         return;
     }
     if(moveType == QUIT)
@@ -174,22 +151,29 @@ void Game::resumeRound(int position){
         endFlag_ = true;
         return;
     }
+    nextPlayer();
     playRound();
-
 }
 
-void Game::playRound(){
-    Card dummy_card = Card(SUIT_COUNT,RANK_COUNT); //since we don't know which card to play or discard, we make this dummy card
+void Game::playRound()
+{
 
     //the round ends when the player before the starting player has no cards
-    while(players_[(startingPlayerIndex_+3)%4]->getHand().size()>0){
-        nextPlayer(); //increment player
-        Type moveType = currentPlayer_->makeMove(table_,deck_,dummy_card);
+    while(currentPlayer_->getHand().size()>0)
+    {
+
+        //we don't know what the play input is,
+        Command c;
+        c.type = BAD_COMMAND;
+
+        Type moveType = currentPlayer_->makeMove(table_,deck_,c);
 
         //either we need player input or the move is invalid, we pause this round
-        if(moveType == BAD_COMMAND){
+        if(moveType == BAD_COMMAND)
+        {
             return;
         }
+        nextPlayer(); //increment player
     }
     printScores();
     checkWinCondition();
@@ -203,40 +187,48 @@ Player* Game::convertToComputerPlayer(Player* humanPlayer)
     return computerPlayer;
 }
 
-void Game::nextPlayer(){
-    playerIndex_ = playerIndex_ + 1;
-    playerIndex_ = playerIndex_ % 4;
-    currentPlayer_ = players_[playerIndex_];
+void Game::nextPlayer()
+{
+    int nextIndex = currentPlayer_->getPlayerNumber();
+    nextIndex = nextIndex % 4;
+    currentPlayer_ = players_[nextIndex];
 
 }
 
-vector<int> Game::getPlayerScores() const{
+vector<int> Game::getPlayerScores() const
+{
     vector<int> scores;
-    for(int i=0;i<players_.size();i++){
+    for(int i=0; i<players_.size(); i++)
+    {
         scores.push_back(players_[i]->getScore());
     }
     return scores;
 }
-vector<int> Game::getPlayerDiscards() const{
+vector<int> Game::getPlayerDiscards() const
+{
     vector<int> discards;
-    for(int i=0;i<players_.size();i++){
+    for(int i=0; i<players_.size(); i++)
+    {
         discards.push_back(players_[i]->getDiscards());
     }
     return discards;
 }
-int Game::ragequit(){
-
+int Game::ragequit()
+{
+    int index = currentPlayer_->getPlayerNumber() - 1;
     currentPlayer_ = convertToComputerPlayer(currentPlayer_);
-    players_[playerIndex_] = currentPlayer_;
-    cout << "Player " << playerIndex_+1 << " ragequits. A computer will now take over." << endl;
-    return playerIndex_;
+    players_[index] = currentPlayer_;
+    cout << "Player " << index+1 << " ragequits. A computer will now take over." << endl;
+    return index;
 }
-//bonus feature
-std::vector<Card> Game::getLegalPlays() const{
+//bonus features
+vector<Card> Game::getLegalPlays() const
+{
     return currentPlayer_->getLegalPlays();
 }
-int Game::getCurrentPlayerPosition() const{
-    return playerIndex_;
+int Game::getCurrentPlayerPosition() const
+{
+    return currentPlayer_->getPlayerNumber();
 }
 
 

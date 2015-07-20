@@ -10,7 +10,7 @@ using namespace std;
 // initializes static player count to zero
 int Player::NumberOfPlayers_ = 0;
 
-Player::Player(): score_(0), oldScore_(0), playerNumber_(++NumberOfPlayers_){}
+Player::Player(): score_(0), oldScore_(0), playerNumber_(++NumberOfPlayers_) {}
 
 Player::Player(const Player& otherPlayer)
 {
@@ -18,14 +18,14 @@ Player::Player(const Player& otherPlayer)
     oldScore_ = otherPlayer.getOldScore();
     playerNumber_ = otherPlayer.getPlayerNumber();
     hand_ = otherPlayer.hand_;
-	discards_ = otherPlayer.discards_;
+    discards_ = otherPlayer.discards_;
 }
 
-Player::~Player(){}
+Player::~Player() {}
 
 void Player::addCards(vector<Card> cards)
 {
-    for(int i=0;i<cards.size();i++)
+    for(int i=0; i<cards.size(); i++)
     {
         hand_.push_back(cards[i]);
     }
@@ -41,20 +41,18 @@ void Player::newRound()
 
 void Player::printHand() const
 {
-	printCards(hand_);
+    printCards(hand_);
 }
 
 void Player::printLegalPlays() const
 {
     cout << "Legal plays: ";
-	printCards(legalPlays_);
+    printCards(legalPlays_);
 }
 
 void Player::printDiscardsAndScore() const
 {
-    cout << "Player " << getPlayerNumber() << "'s discards: ";
-    printCards(discards_);
-    cout << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
+    cout<<getDiscardsAndScore();
 }
 
 
@@ -62,22 +60,14 @@ string Player::getDiscardsAndScore() const
 {
     stringstream ss;
     ss << "Player " << getPlayerNumber() << "'s discards: "
-    <<getCards(discards_)
-    << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
+       <<getCards(discards_)
+       << "Player " << getPlayerNumber() << "'s score: " << getOldScore() << " + " << getScore()-getOldScore() << " = " << getScore() << endl;
     return ss.str();
 }
 
 void Player::printCards(vector<Card> cards) const
 {
-    for(int i = 0; i < cards.size(); i++)
-    {
-        cout << cards[i];
-
-        if(i != cards.size()-1)
-            cout << " ";
-    }
-
-    cout << endl;
+    cout<<getCards(cards);
 }
 string Player::getCards(vector<Card> cards) const
 {
@@ -109,13 +99,10 @@ int Player::getPlayerNumber() const
     return playerNumber_;
 }
 
-int Player::getDiscards() const{
+int Player::getDiscards() const
+{
     return discards_.size();
 }
-
-//Card Player::findCard(Card card) const
-//{
-//}
 
 bool Player::hasCard(Card card) const
 {
@@ -129,11 +116,13 @@ bool Player::hasCard(Card card) const
 
     return false;
 }
-vector<Card> Player::getHand() const{
+vector<Card> Player::getHand() const
+{
     return hand_;
 }
 
-std::vector <Card> Player::getLegalPlays() const{
+vector <Card> Player::getLegalPlays() const
+{
     return legalPlays_;
 }
 
@@ -183,7 +172,6 @@ void Player::removeCard(Card card)
             return;
         }
     }
-
     // else nothing happens
 }
 
@@ -212,7 +200,7 @@ void Player::getNewLegalPlays(const Table &table)
             {
                 vector<Card> sameSuitCards = table.getCardsOfSuit(curSuit);
 
-                for(int j=0;j<sameSuitCards.size();j++)
+                for(int j=0; j<sameSuitCards.size(); j++)
                 {
                     // note that it should be impossible to have same suit and rank (same card)
                     if(abs((int)curRank - (int)sameSuitCards[j].getRank()) <= 1) //1 or -1 difference in rank, 0 is not possible unless they were the same card

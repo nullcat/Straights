@@ -1,12 +1,8 @@
 /*
  * MVC example of GTKmm program
  *
- * Model class.  Is responsible keeping track of the deck of cards.
+ * Model class.  Is responsible keeping track of the facade interface.
  * It knows nothing about views or controllers.
- *
- *  Created by Jo Atlee on 06/07/09.
- *  Copyright 2009 UW. All rights reserved.
- *
  */
 
 
@@ -16,48 +12,62 @@ using namespace std;
 
 const int NUM_PLAYERS = 4;
 
-Model::Model():state_(SETUP) {
-    for(int i=0;i<NUM_PLAYERS;i++){
+Model::Model():state_(SETUP)
+{
+    for(int i=0; i<NUM_PLAYERS; i++)
+    {
         isHuman_[i] = true;
     }
 }
 
-Model::~Model(){
+Model::~Model()
+{
 
 }
-GameState Model::getState() const{
+GameState Model::getState() const
+{
     return state_;
 }
 
-bool Model::isHuman(int position) const{
+bool Model::isHuman(int position) const
+{
     return isHuman_[position];
 }
-vector<Card> Model::getTableCards() const{
+vector<Card> Model::getTableCards() const
+{
     return game_->getTableCards();
 }
-vector<Card> Model::getPlayerHand() const{
+vector<Card> Model::getPlayerHand() const
+{
     return game_->getPlayerHand();
 }
-vector<int> Model::getPlayerScores() const{
+vector<int> Model::getPlayerScores() const
+{
     return game_->getPlayerScores();
 }
-vector<int> Model::getPlayerDiscards() const{
+vector<int> Model::getPlayerDiscards() const
+{
     return game_->getPlayerDiscards();
 }
-string Model::getWinners() const{
-    if(state_ == GAME_END){
+string Model::getWinners() const
+{
+    if(state_ == GAME_END)
+    {
         return game_->getWinners();
     }
-    else{
-        throw "wrong state exception";
+    else
+    {
+        throw string("wrong state exception");
     }
 }
 
-string Model::getResults() const{
+string Model::getResults() const
+{
     return game_->getResults();
 }
 
-void Model::startNewGame(string seed){
+void Model::startNewGame(string seed)
+{
 
     Deck::seed = atoi(seed.c_str());
     Deck* deck = new Deck();
@@ -67,12 +77,14 @@ void Model::startNewGame(string seed){
     vector<Player*> players; //should be 4 players
 
     //cout<<*deck<<endl;
-    for(int i=0; i<NUM_PLAYERS;i++)
+    for(int i=0; i<NUM_PLAYERS; i++)
     {
-        if(isHuman_[i]){
+        if(isHuman_[i])
+        {
             players.push_back(new HumanPlayer());
         }
-        else{
+        else
+        {
             players.push_back(new ComputerPlayer());
         }
     }
@@ -84,55 +96,85 @@ void Model::startNewGame(string seed){
     startNewRound();
 
 }
-void Model::startNewRound(){
+void Model::startNewRound()
+{
 
     game_->startNewRound();
     determineState();
     notify();
 }
 
-void Model::makeMove(int position){
+void Model::playOrDiscard(int position)
+{
+    Command c;
+    c.card = getPlayerHand()[position];
 
-    if(position == -1){
-        int index = game_->ragequit();
-        isHuman_[index] = false;
+    vector<Card> legalPlays = getLegalPlays();
+    if(legalPlays.size()>0)
+    {
+        c.type = PLAY;
     }
-    game_->resumeRound(position);
-
-    determineState();
-    notify();
+    else
+    {
+        c.type = DISCARD;
+    }
+    resumeGame(c);
 }
-void Model::quit(){
-    if(state_!=SETUP){
+
+void Model::quit()
+{
+    if(state_!=SETUP)
+    {
         delete game_;
         state_ = SETUP;
         notify();
     }
 }
-void Model::ragequit(){
-    game_->ragequit();
+
+void Model::ragequit()
+{
+    int index = game_->ragequit();
+    isHuman_[index] = false;
+    Command c;
+    c.type= RAGEQUIT;
+    notify();
+
+    resumeGame(c);
 }
 
-void Model::togglePlayer(int position){
+void Model::resumeGame(Command c)
+{
+    game_->resumeRound(c);
+    determineState();
+    notify();
+}
+
+void Model::togglePlayer(int position)
+{
     isHuman_[position] = !isHuman_[position];
     notify();
 }
-void Model::determineState(){
-    if(game_->gameEnded()){
+void Model::determineState()
+{
+    if(game_->gameEnded())
+    {
         state_ = GAME_END;
     }
-    else if(game_->roundEnded()){
+    else if(game_->roundEnded())
+    {
         state_ = ROUND_END;
     }
-    else{
+    else
+    {
         state_ = RUNNING;
     }
-
 }
-std::vector<Card> Model::getLegalPlays() const{
+vector<Card> Model::getLegalPlays() const
+{
     return game_->getLegalPlays();
 }
-int Model::getCurrentPlayerPosition() const{
+int Model::getCurrentPlayerPosition() const
+{
     return game_->getCurrentPlayerPosition();
 }
 
